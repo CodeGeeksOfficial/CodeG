@@ -1,16 +1,15 @@
 import React from 'react'
-import Logo from 'src/lib/assets/logo.svg'
-import TestComp from 'src/components/TestComp'
-import Image from 'next/image'
+import Navbar from 'src/components/common/Navbar/Navbar'
+import MainCard from 'src/components/homepage/MainCard'
 
 type Props = {}
 
 const Index = (props: Props) => {
   return (
-    <div className='w-20 h-20'>
-      {/* <Image src={Logo} alt=""/> */}
-      <Logo className='border-2'/>
-      <TestComp/>
+    <div>
+      <Navbar />
+      <MainCard />
+      <div className='text-center text-xl'>Coming Soon !!</div>
     </div>
   )
 }
