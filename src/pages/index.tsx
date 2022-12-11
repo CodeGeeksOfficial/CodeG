@@ -1,5 +1,7 @@
 import React from 'react'
+import Footer from 'src/components/common/Footer/Footer'
 import Navbar from 'src/components/common/Navbar/Navbar'
+import CreateAContest from 'src/components/homepage/CreateAContest'
 import MainCard from 'src/components/homepage/MainCard'
 
 type Props = {}
@@ -9,7 +11,9 @@ const Index = (props: Props) => {
     <div>
       <Navbar />
       <MainCard />
-      <div className='text-center text-xl'>Coming Soon !!</div>
+      <CreateAContest className='px-2'/>
+      <div className='text-center text-xl py-12'>Coming Soon !!</div>
+      <Footer/>
     </div>
   )
 }
