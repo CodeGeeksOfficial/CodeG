@@ -13,7 +13,7 @@ const CreateAContest = (props: Props) => {
           <p className='md:w-3/4 pt-2 font-light'>Want to organise your own contest? We&#39;re here to host</p>
         </div>
         <div className='px-5'>
-          <Image src={CreateAContestIllustration} alt="" className='h-40 w-auto'/>
+          <Image src={CreateAContestIllustration} alt="" className='hidden sm:block h-40 w-auto'/>
         </div>
       </div>
     </div>
