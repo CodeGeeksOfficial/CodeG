@@ -7,14 +7,14 @@ const MainCard = (props: Props) => {
   return (
     <div className='flex flex-col lg:flex-row bg-[#303136] text-white pt-6 pb-40 items-center justify-center' style={{ background: "radial-gradient(1100px 100px at bottom,#ffffff 99%,#303136 100%)" }}>
       <div className='lg:w-1/2 px-auto lg:px-16 py-10 flex flex-col'>
-        <div>
-          <p className='text-[140px] leading-10 font-bold'>Code</p>
-          <p className='text-[128px]'>Geeks</p>
-          <p className='text-2xl md:text-3xl font-light'>Code your way to success !</p>
+        <div className='flex flex-col sm:items-start items-center'>
+          <p className='text-[90px] sm:text-[140px] leading-10 font-bold'>Code</p>
+          <p className='text-[84px] sm:text-[128px]'>Geeks</p>
+          <p className='text-xl sm:text-3xl font-light'>Code your way to success !</p>
         </div>
-        <div className='flex gap-4 pt-4 font-semibold text-lg'>
-          <button className='border-2 py-2 px-8 rounded-md hover:bg-[#00ffc3] hover:text-[#303136] ease-in duration-100'>CodeG IDE</button>
-          <button className='bg-[#00ffc3] py-2 px-8 rounded-md text-[#303136] hover:shadow-xl'>Join Clubs</button>
+        <div className='flex gap-4 pt-4 font-semibold text-lg justify-center sm:justify-start'>
+          <button className='text-sm sm:text-base border-2 py-2 px-4 sm:px-8 rounded-md hover:bg-[#00ffc3] hover:text-[#303136] ease-in duration-100'>CodeG IDE</button>
+          <button className='text-sm sm:text-base bg-[#00ffc3] py-2 px-4 sm:px-8 rounded-md text-[#303136] hover:shadow-xl'>Join Clubs</button>
         </div>
       </div>
       <div className='hidden overflow-hidden sm:flex items-center justify-center lg:w-1/2'>
