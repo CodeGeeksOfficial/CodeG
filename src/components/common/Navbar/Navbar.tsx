@@ -24,8 +24,8 @@ const Navbar = (props: Props) => {
           <span className='text-white'>Code</span><span>G</span>
         </Link>
         <div className='hidden lg:flex gap-2'>
-          <button className='text-sm sm:text-base px-4 hover:underline'>Sign In</button>
-          <button className='text-sm sm:text-base border-2 px-4 rounded-md hover:bg-[#00ffc3] hover:text-[#303136] ease-in duration-100'>Sign Up</button>
+          <Link href="/login" className='text-sm sm:text-base px-4 hover:underline self-center'>Sign In</Link>
+          <Link href="/register" className='text-sm sm:text-base border-2 px-4 py-2 rounded-md self-center hover:bg-[#00ffc3] hover:text-[#303136] ease-in duration-100'>Sign Up</Link>
         </div>
       </div>
     </div>
