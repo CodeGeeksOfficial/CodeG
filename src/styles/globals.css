@@ -17,11 +17,24 @@ a {
 
 * {
   box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: #272727;
+}
+
+*::-webkit-scrollbar {
+  width: 12px;
+  cursor: pointer;
+}
+
+*::-webkit-scrollbar-thumb {
+  width: 1px;
+  background-color: #272727;
+  cursor: pointer;
 }
 
 @font-face {
   font-family: Gagalin;
-  src: url("../lib/assets/fonts/gagalin/Gagalin-Regular.otf") format('otf');
+  src: url("../lib/assets/fonts/gagalin/Gagalin-Regular.otf") format("otf");
 }
 
 /* ------------------------- Gilroy Font ------------------------ */
