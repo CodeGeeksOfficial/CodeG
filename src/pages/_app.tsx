@@ -2,6 +2,7 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import "../styles/globals.css";
 import { wrapper } from "src/core/redux/store";
+import { AuthContextProvider } from '../utils/auth'
 
 function App({ Component, pageProps }: AppProps) {
   return (
@@ -9,7 +10,9 @@ function App({ Component, pageProps }: AppProps) {
       <Head>
         {process.env.NODE_ENV === "production" && <title>CodeG</title>}
       </Head>
-      <Component {...pageProps} />
+      <AuthContextProvider>
+        <Component {...pageProps} />
+      </AuthContextProvider>
     </div>
   );
 }
