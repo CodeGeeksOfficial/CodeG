@@ -8,14 +8,19 @@ interface API_CALLS {
 }
 
 const API_CALLS = {
-  ide_call: {
-    URL: "run",
+  compile_code: {
+    URL: "code/run",
     method: "POST",
   },
 
   p_id: {
     URL: "results/p_id",
     method: "GET",
+  },
+
+  code_status: {
+    URL: "code/status",
+    method: "get",
   },
 };
 
@@ -25,17 +30,19 @@ export const apiCall = ({
   key,
   data,
   params,
+  customURL,
 }: {
   key: string;
-  data: {};
-  params: {};
+  data?: {};
+  params?: {};
+  customURL?: string;
 }) => {
   const { URL, method } = API_CALLS[key as objKey];
   const baseURL = "https://codeg-backend.onrender.com";
   return new Promise((resolve, reject) => {
     axios({
       baseURL: baseURL,
-      url: URL,
+      url: customURL ?? URL,
       method: method,
       data: data,
       params: params,
