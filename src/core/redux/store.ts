@@ -1,11 +1,15 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import { createWrapper } from "next-redux-wrapper";
 import { ideSlice } from "./reducers/ideSlice";
+import { outputSlice } from "./reducers/outputSlice";
+import { inputSlice } from "./reducers/inputSlice";
 
 const createStore = () =>
   configureStore({
     reducer: {
       [ideSlice.name]: ideSlice.reducer,
+      [outputSlice.name]: outputSlice.reducer,
+      [inputSlice.name]: inputSlice.reducer,
     },
   });
 

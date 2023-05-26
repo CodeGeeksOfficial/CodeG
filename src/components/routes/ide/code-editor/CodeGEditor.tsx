@@ -1,54 +1,15 @@
 import Editor, { Monaco } from "@monaco-editor/react";
+import axios from "axios";
 import React, { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { apiCall } from "src/core/api-requests/axios";
 import { selectIdeState } from "src/core/redux/reducers/ideSlice";
+import { setOutput } from "src/core/redux/reducers/outputSlice";
 
 type Props = {};
 
-const lang = [
-  {
-    ext: "cpp",
-    editor_lang: "cpp",
-    language: "C++",
-    code: `#include<bits/stdc++.h>
-using namespace std;
-
-int main()
-{
-    cout<<"Hey Codie!"<<endl;
-    return 0;
-}`,
-  },
-  {
-    ext: "py",
-    editor_lang: "python",
-    language: "Python",
-    code: `print("Hey Codie!")`,
-  },
-  {
-    ext: "java",
-    editor_lang: "java",
-    language: "Java",
-    code: `public class Main {
-    public static void main(String args[]) {
-        System.out.println("Hey Codie!");
-    }
-}`,
-  },
-  {
-    ext: "js",
-    editor_lang: "javascript",
-    language: "Node.js",
-    code: `/* 
-    Use INPUT variable to get stdin.
-    Try console.log(INPUT);
-*/
-console.log('Hey Codie!');`,
-  },
-];
-
 const CodeGEditor = (props: Props) => {
-  const editorRef = useRef(null);
+  const editorRef: any = useRef(null);
 
   const ideState = useSelector(selectIdeState);
   const dispatch = useDispatch();
@@ -56,6 +17,56 @@ const CodeGEditor = (props: Props) => {
   function handleEditorDidMount(editor: any, monaco: Monaco) {
     editorRef.current = editor;
   }
+
+  function getValue() {
+    return editorRef.current.getValue();
+  }
+
+  const compileCodeHandler = async () => {
+    console.log(ideState);
+    try {
+      const response: any = await apiCall({
+        key: "compile_code",
+        data: {
+          language: ideState?.ext,
+          code: getValue(),
+        },
+      });
+
+      const processId = response.data;
+
+      let currentInterval = setInterval(async () => {
+        try {
+          // const res: any = await apiCall({
+          //   key: "code_status",
+          //   customURL: `code/status/${processId}}`,
+          // });
+          const res: any = await axios.get(
+            "https://codeg-backend.onrender.com/code/status/" + processId
+          );
+          const {
+            value,
+          }: {
+            value: any;
+          } = res.data;
+          if (value != "Queued" && value != "Processing") {
+            clearInterval(currentInterval);
+            const { stderr, stdout } = JSON.parse(value);
+            dispatch(
+              setOutput({
+                output: stderr != "" ? stderr : stdout,
+              })
+            );
+          }
+        } catch (error) {
+          console.log(error);
+          clearInterval(currentInterval);
+        }
+      }, 1000);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="w-full h-[92%] relative">
@@ -68,7 +79,10 @@ const CodeGEditor = (props: Props) => {
         value={ideState?.code}
         onMount={handleEditorDidMount}
       />
-      <button className="absolute bottom-12 right-14 border-2 border-none px-4 py-2 rounded-md self-center text-[#303136] bg-[#00ffc3] hover:bg-white ease-in duration-100 hover:drop-shadow-[0_5px_5px_rgba(225,225,225,0.25)]">
+      <button
+        className="absolute bottom-12 right-14 border-2 border-none px-4 py-2 rounded-md self-center text-[#303136] bg-[#00ffc3] hover:bg-white ease-in duration-100 hover:drop-shadow-[0_5px_5px_rgba(225,225,225,0.25)]"
+        onClick={compileCodeHandler}
+      >
         Run
       </button>
     </div>

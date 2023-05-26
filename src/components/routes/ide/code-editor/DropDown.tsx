@@ -5,6 +5,7 @@ import { setCurrentLanguage } from "src/core/redux/reducers/ideSlice";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { setOutput } from "src/core/redux/reducers/outputSlice";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -12,28 +13,56 @@ function classNames(...classes: any) {
 
 type Props = {};
 
-const DropDown = (props: Props) => {
+const languages = [
+  {
+    ext: "cpp",
+    editor_lang: "cpp",
+    language: "C++",
+    code: `#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    cout<<"Hey Codie!"<<endl;
+    return 0;
+}`,
+  },
+  {
+    ext: "py",
+    editor_lang: "python",
+    language: "Python",
+    code: `print("Hey Codie!")`,
+  },
+  {
+    ext: "java",
+    editor_lang: "java",
+    language: "Java",
+    code: `public class Main {
+    public static void main(String args[]) {
+        System.out.println("Hey Codie!");
+    }
+}`,
+  },
+  {
+    ext: "js",
+    editor_lang: "javascript",
+    language: "Node.js",
+    code: `/* 
+    Use INPUT variable to get stdin.
+    Try console.log(INPUT);
+*/
+console.log('Hey Codie!');`,
+  },
+];
+
+const SelectLang = (props: Props) => {
   const dispatch = useDispatch();
+
   return (
-    // <div
-    //   className="w-full h-[8%] bg-gradient-to-b from-[#272727] to-[#1e1e1e]"
-    //   onClick={() =>
-    //     dispatch(
-    //       setCurrentLanguage({
-    //         ext: "py",
-    //         editor_lang: "python",
-    //         language: "Python",
-    //         code: `print("Hey Codie!")`,
-    //       })
-    //     )
-    //   }
-    // >
-    //   DropDown
-    // </div>
     <Menu as="div" className="relative inline-block text-left">
       <div className="ml-16 border-none">
         <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-[#272727] px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 text-gray-50">
-          Options
+          Select Language
           <ChevronDownIcon
             className="-mr-1 h-5 w-5 text-gray-400"
             aria-hidden="true"
@@ -52,64 +81,36 @@ const DropDown = (props: Props) => {
       >
         <Menu.Items className="absolute -right-10 z-10 mt-2 w-40 origin-top-right rounded-md bg-[#272727] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none text-gray-50">
           <div className="py-1">
-            <Menu.Item>
-              {({ active }) => (
-                <a
-                  href="#"
-                  className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-50",
-                    "block px-4 py-2 text-sm"
-                  )}
-                >
-                  Account settings
-                </a>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <a
-                  href="#"
-                  className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "block px-4 py-2 text-sm"
-                  )}
-                >
-                  Support
-                </a>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <a
-                  href="#"
-                  className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "block px-4 py-2 text-sm"
-                  )}
-                >
-                  License
-                </a>
-              )}
-            </Menu.Item>
-            <form method="POST" action="#">
-              <Menu.Item>
+            {languages.map((language, idx) => (
+              <Menu.Item key={idx}>
                 {({ active }) => (
-                  <button
-                    type="submit"
+                  <span
                     className={classNames(
-                      active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                      "block w-full px-4 py-2 text-left text-sm"
+                      active ? "bg-gray-100 text-gray-900" : "text-gray-50",
+                      "block px-4 py-2 text-sm"
                     )}
+                    onClick={() => {
+                      dispatch(setCurrentLanguage(language));
+                      dispatch(setOutput({ output: "" }));
+                    }}
                   >
-                    Sign out
-                  </button>
+                    {language.language}
+                  </span>
                 )}
               </Menu.Item>
-            </form>
+            ))}
           </div>
         </Menu.Items>
       </Transition>
     </Menu>
+  );
+};
+
+const DropDown = (props: Props) => {
+  return (
+    <section className="w-full h-[8%] flex items-center">
+      <SelectLang />
+    </section>
   );
 };
 
