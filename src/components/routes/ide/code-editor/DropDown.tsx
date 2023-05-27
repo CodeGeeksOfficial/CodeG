@@ -111,7 +111,7 @@ const SelectLang = (props: Props) => {
 
 const DropDown = (props: Props) => {
   return (
-    <section className="w-full h-[8%] flex items-center">
+    <section className="w-full h-[60px] flex items-center">
       <SelectLang />
     </section>
   );
