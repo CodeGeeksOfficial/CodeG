@@ -23,7 +23,6 @@ const CodeGEditor = (props: Props) => {
   }
 
   const compileCodeHandler = async () => {
-    console.log(ideState);
     try {
       const response: any = await apiCall({
         key: "compile_code",
