@@ -13,7 +13,7 @@ export interface ideState {
 
 const initialState: ideState = {
   ideState: {
-    language: "c++",
+    language: "C++",
     editor_lang: "cpp",
     code: `#include<bits/stdc++.h>
 using namespace std;

@@ -32,7 +32,6 @@ const Navbar = (props: Props) => {
       </div>
       <div className='flex justify-center lg:justify-between w-full'>
         <ul className='hidden lg:flex gap-4'>
-          <button>Home</button>
           <button>About</button>
           <button>Team</button>
           <button>Practice</button>
