@@ -27,6 +27,11 @@ const API_CALLS = {
     URL: "question/create-question",
     method: "post",
   },
+
+  get_questions_list: {
+    URL:"question/all-questions",
+    method:"get"
+  }
 };
 
 type objKey = keyof typeof API_CALLS;

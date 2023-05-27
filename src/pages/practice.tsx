@@ -1,10 +1,10 @@
 import React from "react";
-import IdeContainer from "src/components/routes/ide/IdeContainer";
+import PracticeContainer from "src/components/routes/practice/PracticeContainer";
 
 type Props = {};
 
 const practice = (props: Props) => {
-  return <IdeContainer />;
+  return <PracticeContainer />;
 };
 
 export default practice;
