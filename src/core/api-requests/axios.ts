@@ -28,7 +28,7 @@ const API_CALLS = {
     method: "post",
   },
 
-  get_questions_list: {
+  all_questions: {
     URL:"question/all-questions",
     method:"get"
   }

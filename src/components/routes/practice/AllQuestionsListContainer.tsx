@@ -4,14 +4,14 @@ import IdeNavbar from '../ide/IdeNavbar';
 
 type Props = {}
 
-const PracticeContainer = (props: Props) => {
+const AllQuestionsListContainer = (props: Props) => {
   const [loadingAllQuestions, setLoadingAllQuestions] = useState(true)
   const [questionsList, setQuestionsList] = useState([])
 
   const getAllQuestionsList = async () => {
     try {
       await apiCall({
-        key: "get_questions_list"
+        key: "all_questions"
       }).then((response:any)=>{
         console.log(response.data)
         setQuestionsList(response.data)
@@ -73,4 +73,4 @@ const PracticeContainer = (props: Props) => {
   )
 }
 
-export default PracticeContainer
+export default AllQuestionsListContainer
