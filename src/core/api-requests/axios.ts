@@ -22,6 +22,11 @@ const API_CALLS = {
     URL: "code/status",
     method: "get",
   },
+
+  upload_question: {
+    URL: "question/create-question",
+    method: "post",
+  },
 };
 
 type objKey = keyof typeof API_CALLS;
