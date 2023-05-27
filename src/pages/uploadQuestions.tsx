@@ -6,6 +6,7 @@ type Props = {};
 const Question = () => {
   const [examples, setExamples] = useState(1);
   const [constraints, setConstraints] = useState(1);
+  const [solutions, setSolutions] = useState(1);
 
   const uploadQuestionHandler = async (e: any) => {
     e.preventDefault();
@@ -16,6 +17,7 @@ const Question = () => {
       let apiPayload: any = {
         example: [],
         constraints: [],
+        solution: [],
       };
       for (let pair of pairs) {
         const key: any = pair[0];
@@ -34,12 +36,21 @@ const Question = () => {
         } else if (key.includes("constraint")) {
           let index = parseInt(key.split("_")[1]);
           apiPayload["constraints"][index] = value;
+        } else if (key.includes("code") || key.includes("language")) {
+          let index = parseInt(key.split("_")[1]);
+          let innerKey = key.split("_")[0];
+          apiPayload["solution"][index] = {
+            ...apiPayload["solution"][index],
+            [innerKey]: value,
+          };
         } else apiPayload[key] = value;
       }
-      const response = await apiCall({
-        key: "upload_question",
-        data: apiPayload,
-      });
+      console.log(apiPayload);
+
+      // const response = await apiCall({
+      //   key: "upload_question",
+      //   data: apiPayload,
+      // });
       form.reset();
     } catch (error) {
       console.log(error);
@@ -185,6 +196,51 @@ const Question = () => {
                 type="text"
                 name={`constraint_${idx}`}
                 id={`constraint_${idx}`}
+                className="border-2 border-black"
+              />
+            </div>
+          </div>
+        );
+      })}
+      <div className="flex my-4">
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            setSolutions((prev) => ++prev);
+          }}
+          className="mr-5 border border-black bg-sky-500 text-[#e1e1e1]"
+        >
+          Add Solution
+        </button>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            setSolutions((prev) => --prev);
+          }}
+          className="border border-black bg-rose-500 text-[#e1e1e1]"
+        >
+          Delete Solution
+        </button>
+      </div>
+      {[...Array(solutions)].map((solution: any, idx: any) => {
+        return (
+          <div key={idx} className="mb-5">
+            <h3>Solution {idx + 1}</h3>
+            <div className="mb-2">
+              <label htmlFor={`code_${idx}`}>Code:</label>
+              <input
+                type="text"
+                name={`code_${idx}`}
+                id={`code_${idx}`}
+                className="border-2 border-black"
+              />
+            </div>
+            <div className="mb-2">
+              <label htmlFor={`language_${idx}`}>Language:</label>
+              <input
+                type="text"
+                name={`language_${idx}`}
+                id={`language_${idx}`}
                 className="border-2 border-black"
               />
             </div>
