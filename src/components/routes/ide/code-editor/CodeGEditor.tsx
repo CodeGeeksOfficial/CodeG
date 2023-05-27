@@ -4,6 +4,7 @@ import React, { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { apiCall } from "src/core/api-requests/axios";
 import { selectIdeState } from "src/core/redux/reducers/ideSlice";
+import { currentinputState } from "src/core/redux/reducers/inputSlice";
 import { setOutput } from "src/core/redux/reducers/outputSlice";
 
 type Props = {};
@@ -12,6 +13,7 @@ const CodeGEditor = (props: Props) => {
   const editorRef: any = useRef(null);
 
   const ideState = useSelector(selectIdeState);
+  const inputState = useSelector(currentinputState);
   const dispatch = useDispatch();
 
   function handleEditorDidMount(editor: any, monaco: Monaco) {
@@ -29,6 +31,7 @@ const CodeGEditor = (props: Props) => {
         data: {
           language: ideState?.ext,
           code: getValue(),
+          input: inputState?.input,
         },
       });
 
