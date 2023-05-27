@@ -27,6 +27,16 @@ const API_CALLS = {
     URL: "question/create-question",
     method: "post",
   },
+
+  all_questions: {
+    URL: "question/all-questions",
+    method: "get",
+  },
+
+  fetch_question: {
+    URL: "question/get-question-by-id",
+    method: "get",
+  },
 };
 
 type objKey = keyof typeof API_CALLS;
@@ -51,9 +61,9 @@ export const apiCall = ({
       method: method,
       data: data,
       params: params,
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
+      // headers: {
+      //   Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      // },
     })
       .then((response) => resolve(response))
       .catch((error) => reject(error));

@@ -12,7 +12,7 @@ const Input = (props: Props) => {
   const dispatch = useDispatch();
 
   return (
-    <div className="w-full h-1/2">
+    <div className="w-full h-full">
       <div className="w-full h-[40px] bg-[#272727] px-4 py-2">Input</div>
       <textarea
         name="code-input"

@@ -14,8 +14,12 @@ const CodeEditor = (props: Props) => {
         <CodeGEditor />
       </div>
       <div className="w-1/4 h-full border-x border-[#4f4f4f80]">
-        <Input />
-        <Output />
+        <section className="w-full h-1/2">
+          <Input />
+        </section>
+        <section className="w-full h-1/2">
+          <Output />
+        </section>
       </div>
     </div>
   );

@@ -71,7 +71,7 @@ const CodeGEditor = (props: Props) => {
   };
 
   return (
-    <div className="w-full h-[92%] relative">
+    <div className="w-full h-[calc(100%-60px)] relative">
       <Editor
         height="100%"
         width="100%"

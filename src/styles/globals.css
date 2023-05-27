@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  @variants responsive {
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+    }
+  }
+}
+
 html,
 body {
   padding: 0;
@@ -30,6 +45,11 @@ a {
   width: 1px;
   background-color: #272727;
   cursor: pointer;
+}
+
+*::-webkit-scrollbar-track {
+  background: #272727;
+  border-radius: 5px;
 }
 
 @font-face {
