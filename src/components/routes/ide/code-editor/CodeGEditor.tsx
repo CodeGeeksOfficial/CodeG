@@ -5,10 +5,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { apiCall } from "src/core/api-requests/axios";
 import { selectIdeState } from "src/core/redux/reducers/ideSlice";
 import { setOutput } from "src/core/redux/reducers/outputSlice";
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 type Props = {};
 
 const CodeGEditor = (props: Props) => {
+  const [isCodeCompiling, setIsCodeCompiling] = React.useState(false);
+
   const editorRef: any = useRef(null);
 
   const ideState = useSelector(selectIdeState);
@@ -24,6 +28,7 @@ const CodeGEditor = (props: Props) => {
 
   const compileCodeHandler = async () => {
     try {
+      setIsCodeCompiling(true)
       const response: any = await apiCall({
         key: "compile_code",
         data: {
@@ -56,14 +61,17 @@ const CodeGEditor = (props: Props) => {
                 output: stderr != "" ? stderr : stdout,
               })
             );
+            setIsCodeCompiling(false)
           }
         } catch (error) {
           console.log(error);
           clearInterval(currentInterval);
+          setIsCodeCompiling(false)
         }
       }, 1000);
     } catch (error) {
       console.log(error);
+      setIsCodeCompiling(false)
     }
   };
 
@@ -84,6 +92,13 @@ const CodeGEditor = (props: Props) => {
       >
         Run
       </button>
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={isCodeCompiling}
+        // onClick={handleClose}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </div>
   );
 };

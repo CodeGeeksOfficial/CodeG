@@ -1,6 +1,6 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { setCurrentLanguage } from "src/core/redux/reducers/ideSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectIdeState, setCurrentLanguage } from "src/core/redux/reducers/ideSlice";
 
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
@@ -56,13 +56,14 @@ console.log('Hey Codie!');`,
 ];
 
 const SelectLang = (props: Props) => {
+  const ideState = useSelector(selectIdeState);
   const dispatch = useDispatch();
-
+  
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div className="ml-16 border-none">
         <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-[#272727] px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 text-gray-50">
-          Select Language
+          {ideState.language}
           <ChevronDownIcon
             className="-mr-1 h-5 w-5 text-gray-400"
             aria-hidden="true"
