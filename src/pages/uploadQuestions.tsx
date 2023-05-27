@@ -47,10 +47,10 @@ const Question = () => {
       }
       console.log(apiPayload);
 
-      // const response = await apiCall({
-      //   key: "upload_question",
-      //   data: apiPayload,
-      // });
+      const response = await apiCall({
+        key: "upload_question",
+        data: apiPayload,
+      });
       form.reset();
     } catch (error) {
       console.log(error);
