@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { apiCall } from "src/core/api-requests/axios";
 import IdeNavbar from '../ide/IdeNavbar';
-
+import { useRouter } from 'next/router';
+import RatingStarFilled from 'src/lib/assets/icons/RatingStarFilled.svg'
+import RatingStarUnfilled from 'src/lib/assets/icons/RatingStarUnfilled.svg'
 type Props = {}
 
 const AllQuestionsListContainer = (props: Props) => {
+  const router = useRouter()
   const [loadingAllQuestions, setLoadingAllQuestions] = useState(true)
   const [questionsList, setQuestionsList] = useState([])
 
@@ -23,7 +26,7 @@ const AllQuestionsListContainer = (props: Props) => {
   }
 
   const handleSolveProblemId = (quesId:string) => {
-    // TODO: router.push(/practice/:qId)
+    router.push(`/practice/${quesId}`);
   }
 
   useEffect(()=>{
@@ -57,11 +60,35 @@ const AllQuestionsListContainer = (props: Props) => {
                   <button
                     className='flex items-center w-full h-12 py-2 hover:bg-slate-50'
                     key ={i}
-                    onClick={()=>handleSolveProblemId('quesId')}
+                    onClick={()=>handleSolveProblemId(ques?.id)}
                   >
                     <div className='flex w-[10%]'>{i+1}.</div>
                     <div className='flex w-[70%]'>{ques?.title}</div>
-                    <div className='flex w-[20%]'>{ques?.difficulty}</div>
+                    <div className='flex w-[20%]'>
+                      {ques?.difficulty === 'easy' && 
+                        <div className='flex gap-1'>
+                          <RatingStarFilled/>
+                          <RatingStarUnfilled/>
+                          <RatingStarUnfilled/>
+                        </div>
+                      }
+
+                      {ques?.difficulty === 'medium' && 
+                        <div className='flex gap-1'>
+                          <RatingStarFilled/>
+                          <RatingStarFilled/>
+                          <RatingStarUnfilled/>
+                        </div>
+                      }
+
+                      {ques?.difficulty === 'hard' && 
+                        <div className='flex gap-1'>
+                          <RatingStarFilled/>
+                          <RatingStarFilled/>
+                          <RatingStarFilled/>
+                        </div>
+                      }
+                    </div>
                   </button>
                 )
               })}

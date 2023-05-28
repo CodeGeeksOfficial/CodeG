@@ -1,4 +1,5 @@
 import axios from "axios";
+import firebaseAuth from "src/firebase/firebase.config";
 
 interface API_CALLS {
   [key: string]: {
@@ -47,11 +48,16 @@ const API_CALLS = {
     URL: "question/get-question-by-id",
     method: "get",
   },
+
+  update_user: {
+    URL:"user/update-user",
+    method:"post"
+  }
 };
 
 type objKey = keyof typeof API_CALLS;
 
-export const apiCall = ({
+export const apiCall = async ({
   key,
   data,
   params,
@@ -64,6 +70,7 @@ export const apiCall = ({
 }) => {
   const { URL, method } = API_CALLS[key as objKey];
   const baseURL = "https://codeg-backend.onrender.com";
+  const idToken = await firebaseAuth.currentUser?.getIdToken(true)
   return new Promise((resolve, reject) => {
     axios({
       baseURL: baseURL,
@@ -71,9 +78,9 @@ export const apiCall = ({
       method: method,
       data: data,
       params: params,
-      // headers: {
-      //   Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      // },
+      headers: {
+        Authorization: `Bearer ${idToken}`,
+      },
     })
       .then((response) => resolve(response))
       .catch((error) => reject(error));
