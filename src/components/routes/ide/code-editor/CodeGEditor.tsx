@@ -9,8 +9,8 @@ import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 
 type Props = {
-  route: string;
-  questionId: string;
+  route?: string;
+  questionId?: any;
 };
 
 const CodeGEditor = ({ route, questionId }: Props) => {
