@@ -3,7 +3,7 @@ import PracticeContainer from "src/components/routes/practice/PracticeContainer"
 import { apiCall } from "src/core/api-requests/axios";
 
 type Props = {
-  question: {};
+  question: any;
 };
 
 const practice = ({ question }: Props) => {
@@ -39,7 +39,7 @@ export async function getStaticProps({ params }: { params: any }) {
       key: "fetch_question",
       params: { question_id: params.id },
     });
-    question = res?.data;
+    question = { ...res?.data, id: params.id };
     notFound = question ? false : true;
   } catch (error) {}
 

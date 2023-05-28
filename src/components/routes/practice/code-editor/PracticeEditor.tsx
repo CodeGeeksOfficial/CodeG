@@ -4,14 +4,16 @@ import CodeGEditor from "../../ide/code-editor/CodeGEditor";
 import Input from "../../ide/code-editor/Input";
 import Output from "../../ide/code-editor/Output";
 
-type Props = {};
+type Props = {
+  questionId: string;
+};
 
-const PracticeEditor = (props: Props) => {
+const PracticeEditor = ({ questionId }: Props) => {
   return (
     <div className="w-full h-full bg-[#1e1e1e] text-[#e1e1e1]">
       <div className="w-full h-3/5">
         <DropDown />
-        <CodeGEditor />
+        <CodeGEditor route={"practice"} questionId={questionId} />
       </div>
       {/* <button>Expand</button> */}
       <div className="w-full h-2/5 border-x border-[#4f4f4f80] flex">

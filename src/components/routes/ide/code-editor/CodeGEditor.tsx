@@ -1,17 +1,19 @@
 import Editor, { Monaco } from "@monaco-editor/react";
-import axios from "axios";
 import React, { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { apiCall } from "src/core/api-requests/axios";
 import { selectIdeState } from "src/core/redux/reducers/ideSlice";
 import { currentinputState } from "src/core/redux/reducers/inputSlice";
 import { setOutput } from "src/core/redux/reducers/outputSlice";
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 
-type Props = {};
+type Props = {
+  route: string;
+  questionId: string;
+};
 
-const CodeGEditor = (props: Props) => {
+const CodeGEditor = ({ route, questionId }: Props) => {
   const [isCodeCompiling, setIsCodeCompiling] = React.useState(false);
 
   const editorRef: any = useRef(null);
@@ -28,15 +30,27 @@ const CodeGEditor = (props: Props) => {
     return editorRef.current.getValue();
   }
 
-  const compileCodeHandler = async () => {
+  const compileCodeHandler = async (submit: boolean) => {
     try {
-      setIsCodeCompiling(true)
+      setIsCodeCompiling(true);
       const response: any = await apiCall({
-        key: "compile_code",
+        key:
+          route == "practice"
+            ? submit
+              ? "submit_code"
+              : "compare_code"
+            : "compile_code",
+        ...(route == "practice" && {
+          params: {
+            question_id: questionId,
+          },
+        }),
         data: {
           language: ideState?.ext,
           code: getValue(),
-          input: inputState?.input,
+          ...(route == "practice"
+            ? { "text-inputs": JSON.stringify([inputState?.input]) }
+            : { input: inputState?.input }),
         },
       });
 
@@ -44,13 +58,10 @@ const CodeGEditor = (props: Props) => {
 
       let currentInterval = setInterval(async () => {
         try {
-          // const res: any = await apiCall({
-          //   key: "code_status",
-          //   customURL: `code/status/${processId}}`,
-          // });
-          const res: any = await axios.get(
-            "https://codeg-backend.onrender.com/code/status/" + processId
-          );
+          const res: any = await apiCall({
+            key: "code_status",
+            customURL: "code/status/" + processId,
+          });
           const {
             value,
           }: {
@@ -58,23 +69,31 @@ const CodeGEditor = (props: Props) => {
           } = res.data;
           if (value != "Queued" && value != "Processing") {
             clearInterval(currentInterval);
-            const { stderr, stdout } = JSON.parse(value);
-            dispatch(
-              setOutput({
-                output: stderr != "" ? stderr : stdout,
-              })
-            );
-            setIsCodeCompiling(false)
+            if (route == "practice")
+              dispatch(
+                setOutput({
+                  output: JSON.parse(value),
+                })
+              );
+            else {
+              const { stderr, stdout } = JSON.parse(value);
+              dispatch(
+                setOutput({
+                  output: stderr != "" ? stderr : stdout,
+                })
+              );
+            }
+            setIsCodeCompiling(false);
           }
         } catch (error) {
           console.log(error);
           clearInterval(currentInterval);
-          setIsCodeCompiling(false)
+          setIsCodeCompiling(false);
         }
-      }, 1000);
+      }, 3000);
     } catch (error) {
       console.log(error);
-      setIsCodeCompiling(false)
+      setIsCodeCompiling(false);
     }
   };
 
@@ -89,14 +108,24 @@ const CodeGEditor = (props: Props) => {
         value={ideState?.code}
         onMount={handleEditorDidMount}
       />
-      <button
-        className="absolute bottom-12 right-14 border-2 border-none px-4 py-2 rounded-md self-center text-[#303136] bg-[#00ffc3] hover:bg-white ease-in duration-100 hover:drop-shadow-[0_5px_5px_rgba(225,225,225,0.25)]"
-        onClick={compileCodeHandler}
-      >
-        Run
-      </button>
+      <div className="flex absolute bottom-12 right-14">
+        <button
+          className="border-2 border-none px-4 py-2 rounded-md self-center text-[#303136] bg-[#00ffc3] hover:bg-white ease-in duration-100 hover:drop-shadow-[0_5px_5px_rgba(225,225,225,0.25)]"
+          onClick={() => compileCodeHandler(false)}
+        >
+          Run
+        </button>
+        {route == "practice" ? (
+          <button
+            className=" border-2 border-none px-4 py-2 ml-8 rounded-md self-center text-[#303136] hover:bg-[#00ffc3] bg-white ease-in duration-100 hover:drop-shadow-[0_5px_5px_rgba(0,255,195,0.25)]"
+            onClick={() => compileCodeHandler(true)}
+          >
+            Submit
+          </button>
+        ) : null}
+      </div>
       <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={isCodeCompiling}
         // onClick={handleClose}
       >

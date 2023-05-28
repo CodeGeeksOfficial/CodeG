@@ -13,6 +13,16 @@ const API_CALLS = {
     method: "POST",
   },
 
+  compare_code: {
+    URL: "code/question-run",
+    method: "post",
+  },
+
+  submit_code: {
+    URL: "code/question-submit",
+    method: "post",
+  },
+
   p_id: {
     URL: "results/p_id",
     method: "GET",
