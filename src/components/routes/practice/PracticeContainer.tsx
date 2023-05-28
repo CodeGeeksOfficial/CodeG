@@ -4,7 +4,9 @@ import PracticeEditor from "./code-editor/PracticeEditor";
 import QuestionInfo from "./QuestionInfo";
 
 type Props = {
-  question: {};
+  question: {
+    id: string;
+  };
 };
 
 const PracticeContainer = ({ question }: Props) => {
@@ -16,7 +18,7 @@ const PracticeContainer = ({ question }: Props) => {
           <QuestionInfo question={question} />
         </section>
         <section className="w-1/2 h-full">
-          <PracticeEditor />
+          <PracticeEditor questionId={question.id} />
         </section>
       </div>
     </div>
