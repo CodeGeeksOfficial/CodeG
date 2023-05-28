@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useContext, createContext} from 'react';
 import firebaseAuth from '../firebase/firebase.config'
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { apiCall } from 'src/core/api-requests/axios';
 
 const authContext = createContext();
 
@@ -8,10 +9,23 @@ export function AuthContextProvider({ children }) {
   const [currentUser, setCurrentUser] = useState()
   const [loading, setLoading] = useState(true)
 
-  function signInWithGoogle() {
+  async function signInWithGoogle() {
     const provider = new GoogleAuthProvider();
-      const result = signInWithPopup(firebaseAuth,provider);
-      return result
+      await signInWithPopup(firebaseAuth,provider).then(async (result)=>{
+        const user = result.user
+        apiCall({
+          key:"update_user",
+          data: {
+            // TODO: create User Class and send proper objects
+            uuid: user?.uid,
+            name: user?.displayName,
+            email: user?.email,
+            photoURL:user?.photoURL
+          },
+        })
+      }).catch((error)=>{
+        console.log(error)
+      })
   }
   function logOut() {
     firebaseAuth.signOut()
