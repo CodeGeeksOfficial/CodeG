@@ -228,8 +228,7 @@ const Question = () => {
             <h3>Solution {idx + 1}</h3>
             <div className="mb-2">
               <label htmlFor={`code_${idx}`}>Code:</label>
-              <input
-                type="text"
+              <textarea
                 name={`code_${idx}`}
                 id={`code_${idx}`}
                 className="border-2 border-black"
