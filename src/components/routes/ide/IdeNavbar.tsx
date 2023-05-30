@@ -10,14 +10,16 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
+import { withAuthModal } from "src/components/common/Modals/Auth";
 
-
-type Props = {};
+type IdeNavbarProps = {
+  openAuthModal?: () => void
+};
 
 const settings = ['Logout'];
 
 
-const IdeNavbar = (props: Props) => {
+const IdeNavbar = ({openAuthModal}: IdeNavbarProps) => {
   const { signInWithGoogle,currentUser,logOut } = useAuth()
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -40,7 +42,7 @@ const IdeNavbar = (props: Props) => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-  console.log(currentUser)
+  // console.log(currentUser)
   return (
     <div className="w-screen h-[8vh] bg-[#202225] flex items-center justify-between px-4">
       <Link
@@ -95,4 +97,5 @@ const IdeNavbar = (props: Props) => {
   );
 };
 
-export default IdeNavbar;
+// export default IdeNavbar
+export default withAuthModal(IdeNavbar)

@@ -6,14 +6,14 @@ import { AuthContextProvider } from '../utils/auth'
 
 function App({ Component, pageProps }: AppProps) {
   return (
-    <div>
+    <>
       <Head>
         {process.env.NODE_ENV === "production" && <title>CodeG</title>}
       </Head>
       <AuthContextProvider>
         <Component {...pageProps} />
       </AuthContextProvider>
-    </div>
+    </>
   );
 }
 

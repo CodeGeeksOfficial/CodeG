@@ -49,7 +49,7 @@ const CodeGEditor = ({ route, questionId }: Props) => {
           language: ideState?.ext,
           code: getValue(),
           ...(route == "practice"
-            ? { "text-inputs": JSON.stringify([inputState?.input]) }
+            ? { "test-inputs": [inputState?.input] }
             : { input: inputState?.input }),
         },
       });
