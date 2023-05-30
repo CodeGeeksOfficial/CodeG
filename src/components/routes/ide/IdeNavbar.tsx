@@ -87,7 +87,7 @@ const IdeNavbar = ({openAuthModal}: IdeNavbarProps) => {
         :
         <button 
           className="flex flex-row gap-2 items-center cursor-pointer px-2 py-2 hover:bg-[#00ffc3] hover:border-[#00ffc3] border rounded-md ease-in duration-100 text-white tracking-wide hover:text-[#303136]"
-          onClick={hangleGoogleLogin}
+          onClick={openAuthModal}
         >
           <GoogleIcon className = 'w-6 h-6'/>
           <div className="text-sm sm:text-base">Sign In</div>

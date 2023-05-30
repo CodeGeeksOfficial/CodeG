@@ -43,7 +43,7 @@ export const AuthModal = ({isOpen, onClose, onSignUp, onSubmit}: AuthModalProps)
   );
 };
 
-export const withAuthModal = (Component:React.ComponentType) => {(props:any) => {
+export const withAuthModal = (Component:React.ComponentType<any>) => {const ComponentToReturn = (props:any) => {
   const {isOpen, onOpen, onClose} = useDisclosure();
   const { signInWithGoogle } = useAuth();
 
@@ -59,8 +59,8 @@ export const withAuthModal = (Component:React.ComponentType) => {(props:any) => 
       <>
           <AuthModal isOpen={isOpen} onClose={onClose} onSignUp = {logInWithGoogle} />
           <Component openAuthModal={onOpen} {...props} />
-          {props.children}
       </>
   );
 };
+return ComponentToReturn;
 }
