@@ -1,5 +1,5 @@
 import React from "react";
-import IdeNavbar from "../ide/IdeNavbar";
+import Navbar from 'src/components/common/Navbar/Navbar'
 import PracticeEditor from "./code-editor/PracticeEditor";
 import QuestionInfo from "./QuestionInfo";
 
@@ -12,7 +12,7 @@ type Props = {
 const PracticeContainer = ({ question }: Props) => {
   return (
     <div>
-      <IdeNavbar />
+      <Navbar />
       <div className="w-screen h-[92vh] flex">
         <section className="w-1/2 h-full">
           <QuestionInfo question={question} />
