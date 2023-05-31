@@ -7,13 +7,17 @@ import { currentinputState } from "src/core/redux/reducers/inputSlice";
 import { setOutput } from "src/core/redux/reducers/outputSlice";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import { withAuthModal } from "src/components/common/Modals/Auth";
+import { useAuth } from "src/utils/auth";
 
 type Props = {
   route?: string;
   questionId?: any;
+  openAuthModal: () => void
 };
 
-const CodeGEditor = ({ route, questionId }: Props) => {
+const CodeGEditor = ({ route, questionId, openAuthModal }: Props) => {
+  const { currentUser } = useAuth()
   const [isCodeCompiling, setIsCodeCompiling] = React.useState(false);
 
   const editorRef: any = useRef(null);
@@ -111,14 +115,14 @@ const CodeGEditor = ({ route, questionId }: Props) => {
       <div className="flex absolute bottom-12 right-14">
         <button
           className="border-2 border-none px-4 py-2 rounded-md self-center text-[#303136] bg-[#00ffc3] hover:bg-white ease-in duration-100 hover:drop-shadow-[0_5px_5px_rgba(225,225,225,0.25)]"
-          onClick={() => compileCodeHandler(false)}
+          onClick={() => currentUser ? compileCodeHandler(false) : openAuthModal()}
         >
           Run
         </button>
         {route == "practice" ? (
           <button
             className=" border-2 border-none px-4 py-2 ml-8 rounded-md self-center text-[#303136] hover:bg-[#00ffc3] bg-white ease-in duration-100 hover:drop-shadow-[0_5px_5px_rgba(0,255,195,0.25)]"
-            onClick={() => compileCodeHandler(true)}
+            onClick={() => currentUser ? compileCodeHandler(true) : openAuthModal()}
           >
             Submit
           </button>
@@ -135,4 +139,4 @@ const CodeGEditor = ({ route, questionId }: Props) => {
   );
 };
 
-export default CodeGEditor;
+export default withAuthModal(CodeGEditor);
