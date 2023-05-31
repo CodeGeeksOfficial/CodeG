@@ -8,11 +8,11 @@ type Props = {}
 
 const Index = (props: Props) => {
   return (
-    <div>
+    <div className='w-screen h-screen'>
       <Navbar />
       <MainCard />
-      <CreateAContest className='px-2' />
-      <div className='text-center text-xl py-12'>Coming Soon !!</div>
+      <CreateAContest className='px-2 pb-16 bg-[#f0f0f0]' />
+      {/* <div className='text-center text-xl py-12'>Coming Soon !!</div> */}
       <Footer />
     </div>
   )

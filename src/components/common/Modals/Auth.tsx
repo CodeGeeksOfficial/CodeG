@@ -36,7 +36,7 @@ export const AuthModal = ({isOpen, onClose, onSignUp, onSubmit,className}: AuthM
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Dialog.Overlay className={`fixed inset-0 bg-[#646464] bg-opacity-75 transition-opacity`} />
+              <Dialog.Overlay className={`fixed inset-0 bg-[#000000] bg-opacity-50 transition-opacity`} />
             </Transition.Child>
 
             <Transition.Child
@@ -49,7 +49,7 @@ export const AuthModal = ({isOpen, onClose, onSignUp, onSubmit,className}: AuthM
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <div
-                className="relative inline-block align-top bg-[#272727] sm:rounded-lg sm:w-[480px] sm:h-[380px] w-full h-full text-left overflow-hidden shadow-xl transform transition-all"
+                className="relative inline-block align-top bg-[#1E1F25] sm:rounded-lg sm:w-[480px] sm:h-[380px] w-full h-full text-left overflow-hidden shadow-xl transform transition-all"
               >
                 <button
                   onClick={onClose}
@@ -60,6 +60,7 @@ export const AuthModal = ({isOpen, onClose, onSignUp, onSubmit,className}: AuthM
                     alt=""
                     width={30}
                     height={30}
+                    priority={true}
                   />
                 </button>
                 <div className="h-full flex flex-col">
@@ -68,6 +69,7 @@ export const AuthModal = ({isOpen, onClose, onSignUp, onSubmit,className}: AuthM
                     alt="Login_Icon"
                     height={240}
                     className="flex items-center justify-between w-full object-cover"
+                    priority={true}
                   />
                   <div className='sm:py-10 sm:px-[60px]  mb-5 px-6 py-10 flex flex-col justify-between items-center'>
                     <button

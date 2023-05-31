@@ -1,5 +1,5 @@
 import React from "react";
-import IdeNavbar from "./IdeNavbar";
+import Navbar from 'src/components/common/Navbar/Navbar'
 import CodeEditor from "./CodeEditor";
 
 type Props = {};
@@ -7,7 +7,7 @@ type Props = {};
 const IdeContainer = (props: Props) => {
   return (
     <div>
-      <IdeNavbar />
+      <Navbar />
       <CodeEditor />
     </div>
   );
