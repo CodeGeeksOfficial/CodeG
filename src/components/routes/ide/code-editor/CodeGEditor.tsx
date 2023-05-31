@@ -115,7 +115,7 @@ const CodeGEditor = ({ route, questionId, openAuthModal }: Props) => {
       <div className="flex absolute bottom-12 right-14">
         <button
           className="border-2 border-none px-4 py-2 rounded-md self-center text-[#303136] bg-[#00ffc3] hover:bg-white ease-in duration-100 hover:drop-shadow-[0_5px_5px_rgba(225,225,225,0.25)]"
-          onClick={() => currentUser ? compileCodeHandler(false) : openAuthModal()}
+          onClick={() => route === "ide" ? compileCodeHandler(false) : currentUser ? compileCodeHandler(false) : openAuthModal()}
         >
           Run
         </button>

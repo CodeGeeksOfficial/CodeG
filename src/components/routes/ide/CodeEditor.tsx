@@ -11,7 +11,7 @@ const CodeEditor = (props: Props) => {
     <div className="w-screen h-[92vh] bg-[#1e1e1e] text-[#e1e1e1] flex">
       <div className="w-3/4 h-full">
         <DropDown />
-        <CodeGEditor />
+        <CodeGEditor route = {"ide"}/>
       </div>
       <div className="w-1/4 h-full border-x border-[#4f4f4f80]">
         <section className="w-full h-1/2">
