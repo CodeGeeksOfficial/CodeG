@@ -53,7 +53,7 @@ const CodeGEditor = ({ route, questionId, openAuthModal }: Props) => {
           language: ideState?.ext,
           code: getValue(),
           ...(route == "practice"
-            ? { "test-inputs": [inputState?.input] }
+            ? { test_inputs: [inputState?.input] }
             : { input: inputState?.input }),
         },
       });

@@ -7,6 +7,7 @@ const Question = () => {
   const [examples, setExamples] = useState(1);
   const [constraints, setConstraints] = useState(1);
   const [solutions, setSolutions] = useState(1);
+  const [testcases, setTestcases] = useState(1);
 
   const uploadQuestionHandler = async (e: any) => {
     e.preventDefault();
@@ -18,6 +19,7 @@ const Question = () => {
         example: [],
         constraints: [],
         solution: [],
+        testcases: [],
       };
       for (let pair of pairs) {
         const key: any = pair[0];
@@ -43,6 +45,9 @@ const Question = () => {
             ...apiPayload["solution"][index],
             [innerKey]: value,
           };
+        } else if (key.includes("testcase")) {
+          let index = parseInt(key.split("_")[1]);
+          apiPayload["testcases"][index] = value;
         } else apiPayload[key] = value;
       }
       console.log(apiPayload);
@@ -63,7 +68,7 @@ const Question = () => {
       id="question_tool"
     >
       <div className="mb-5">
-        <label htmlFor="title">Title:</label>
+        <label htmlFor="title">Title: </label>
         <input
           type="text"
           name="title"
@@ -72,7 +77,7 @@ const Question = () => {
         />
       </div>
       <div className="mb-5">
-        <label htmlFor="difficulty">Difficulty:</label>
+        <label htmlFor="difficulty">Difficulty: </label>
         <select
           name="difficulty"
           id="difficulty"
@@ -88,7 +93,7 @@ const Question = () => {
         </select>
       </div>
       <div className="mb-5">
-        <label htmlFor="difficulty">Points:</label>
+        <label htmlFor="difficulty">Points: </label>
         <select
           name="points"
           id="points"
@@ -104,7 +109,7 @@ const Question = () => {
         </select>
       </div>
       <div className="mb-5">
-        <label htmlFor="question">Question:</label>
+        <label htmlFor="question">Question: </label>
         <input
           type="text"
           name="question"
@@ -137,7 +142,7 @@ const Question = () => {
           <div key={idx} className="mb-5">
             <h3>Example {idx + 1}</h3>
             <div className="mb-2">
-              <label htmlFor={`input_${idx}`}>Input:</label>
+              <label htmlFor={`input_${idx}`}>Input: </label>
               <input
                 type="text"
                 name={`input_${idx}`}
@@ -146,7 +151,7 @@ const Question = () => {
               />
             </div>
             <div className="mb-2">
-              <label htmlFor={`output_${idx}`}>Output:</label>
+              <label htmlFor={`output_${idx}`}>Output: </label>
               <input
                 type="text"
                 name={`output_${idx}`}
@@ -155,7 +160,7 @@ const Question = () => {
               />
             </div>
             <div className="mb-2">
-              <label htmlFor={`explanation_${idx}`}>Explanation:</label>
+              <label htmlFor={`explanation_${idx}`}>Explanation: </label>
               <input
                 type="text"
                 name={`explanation_${idx}`}
@@ -191,7 +196,7 @@ const Question = () => {
           <div key={idx} className="mb-5">
             <h3>Constraint {idx + 1}</h3>
             <div>
-              <label htmlFor={`constraint_${idx}`}>Constraint:</label>
+              <label htmlFor={`constraint_${idx}`}>Constraint: </label>
               <input
                 type="text"
                 name={`constraint_${idx}`}
@@ -227,7 +232,7 @@ const Question = () => {
           <div key={idx} className="mb-5">
             <h3>Solution {idx + 1}</h3>
             <div className="mb-2">
-              <label htmlFor={`code_${idx}`}>Code:</label>
+              <label htmlFor={`code_${idx}`}>Code: </label>
               <textarea
                 name={`code_${idx}`}
                 id={`code_${idx}`}
@@ -235,11 +240,46 @@ const Question = () => {
               />
             </div>
             <div className="mb-2">
-              <label htmlFor={`language_${idx}`}>Language:</label>
+              <label htmlFor={`language_${idx}`}>Language: </label>
               <input
                 type="text"
                 name={`language_${idx}`}
                 id={`language_${idx}`}
+                className="border-2 border-black"
+              />
+            </div>
+          </div>
+        );
+      })}
+      <div className="flex my-4">
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            setTestcases((prev) => ++prev);
+          }}
+          className="mr-5 border border-black bg-sky-500 text-[#e1e1e1]"
+        >
+          Add Testcase
+        </button>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            setTestcases((prev) => --prev);
+          }}
+          className="border border-black bg-rose-500 text-[#e1e1e1]"
+        >
+          Delete Testcase
+        </button>
+      </div>
+      {[...Array(testcases)].map((testcase: any, idx: any) => {
+        return (
+          <div key={idx} className="mb-5">
+            <h3>Testcase {idx + 1}</h3>
+            <div className="mb-2">
+              <label htmlFor={`testcase_${idx}`}>Testcase: </label>
+              <textarea
+                name={`testcase_${idx}`}
+                id={`testcase_${idx}`}
                 className="border-2 border-black"
               />
             </div>
