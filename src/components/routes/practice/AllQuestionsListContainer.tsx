@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { apiCall } from "src/core/api-requests/axios";
-import IdeNavbar from '../ide/IdeNavbar';
 import { useRouter } from 'next/router';
 import RatingStarFilled from 'src/lib/assets/icons/RatingStarFilled.svg'
 import RatingStarUnfilled from 'src/lib/assets/icons/RatingStarUnfilled.svg'
+import IdeNavbar from '../ide/IdeNavbar';
 type Props = {}
 
 const AllQuestionsListContainer = (props: Props) => {

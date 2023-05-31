@@ -10,14 +10,16 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
+import { withAuthModal } from "src/components/common/Modals/Auth";
 
-
-type Props = {};
+type IdeNavbarProps = {
+  openAuthModal?: () => void
+};
 
 const settings = ['Logout'];
 
 
-const IdeNavbar = (props: Props) => {
+const IdeNavbar = ({openAuthModal}: IdeNavbarProps) => {
   const { signInWithGoogle,currentUser,logOut } = useAuth()
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -40,7 +42,7 @@ const IdeNavbar = (props: Props) => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-  console.log(currentUser)
+  // console.log(currentUser)
   return (
     <div className="w-screen h-[8vh] bg-[#202225] flex items-center justify-between px-4">
       <Link
@@ -85,7 +87,7 @@ const IdeNavbar = (props: Props) => {
         :
         <button 
           className="flex flex-row gap-2 items-center cursor-pointer px-2 py-2 hover:bg-[#00ffc3] hover:border-[#00ffc3] border rounded-md ease-in duration-100 text-white tracking-wide hover:text-[#303136]"
-          onClick={hangleGoogleLogin}
+          onClick={openAuthModal}
         >
           <GoogleIcon className = 'w-6 h-6'/>
           <div className="text-sm sm:text-base">Sign In</div>
@@ -95,4 +97,5 @@ const IdeNavbar = (props: Props) => {
   );
 };
 
-export default IdeNavbar;
+// export default IdeNavbar
+export default withAuthModal(IdeNavbar)
