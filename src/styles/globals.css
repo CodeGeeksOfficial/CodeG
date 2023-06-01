@@ -203,4 +203,9 @@ a {
   font-weight: 900;
 }
 
-/* -------------------------------------------------------------------------- */
+/* ------------------ Top Progress Bar Styles -------------------------- */
+
+#nprogress .bar {
+  height: 2px !important;
+  background: #00ffc2 !important;
+}
