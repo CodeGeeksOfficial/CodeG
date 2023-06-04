@@ -1,35 +1,19 @@
 import Link from "next/link";
-import React from "react";
+import React, { Fragment } from "react";
 import Logo from "src/lib/assets/logo.svg";
 import { useAuth } from "src/utils/auth";
 import GoogleIcon from 'src/lib/assets/icons/GoogleIcon.svg'
-import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
-import Tooltip from '@mui/material/Tooltip';
-import IconButton from '@mui/material/IconButton';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import Typography from '@mui/material/Typography';
 import { withAuthModal } from "src/components/common/Modals/Auth";
+import { Popover, Transition } from "@headlessui/react";
 
 type NavbarProps = {
   openAuthModal?: () => void
 };
 
-const settings = ['Logout'];
-
-
 const Navbar = ({openAuthModal}: NavbarProps) => {
-  const { signInWithGoogle,currentUser,logOut } = useAuth()
+  const { currentUser,logOut } = useAuth()
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-
-  const hangleGoogleLogin = async () => {
-    try {
-      let result = await signInWithGoogle()
-    } catch (error) {
-      console.log(error)
-    }
-  }
 
   const handleSignOut = () => {
     logOut()
@@ -37,10 +21,6 @@ const Navbar = ({openAuthModal}: NavbarProps) => {
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
-  };
-  
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
   };
 
   return (
@@ -58,35 +38,46 @@ const Navbar = ({openAuthModal}: NavbarProps) => {
       </div>
       <div className="">
         {currentUser ? 
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title={currentUser?.displayName}>
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src={currentUser?.photoURL} />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: '45px' }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting) => (
-                  <MenuItem sx={{width:80,height:20}} key={setting} onClick={handleSignOut}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
+          <Popover className="relative">
+            <Popover.Button className="inline-flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
+              <Avatar alt="Profile Photo" src={currentUser?.photoURL} />
+            </Popover.Button>
+
+            <Transition
+              as={Fragment}
+              enter="transition ease-out duration-200"
+              enterFrom="opacity-0 translate-y-1"
+              enterTo="opacity-100 translate-y-0"
+              leave="transition ease-in duration-150"
+              leaveFrom="opacity-100 translate-y-0"
+              leaveTo="opacity-0 translate-y-1"
+            >
+              <Popover.Panel className="absolute right-0 z-10 mt-2 flex w-screen max-w-[256px] -translate-x-0">
+                <div className="w-screen max-w-[256px] flex-auto overflow-hidden rounded-xl bg-[#fbfbfb] text-sm leading-6 shadow-md shadow-black">
+                  <div className="p-3">
+                    <div className="group relative flex gap-x-6 rounded-md p-4 hover:bg-[#00ffc2] transition-all">
+                      <Link
+                          href={'/dashboard'}
+                          className="font-semibold text-gray-900"
+                        >
+                          Dashboard
+                          <span className="absolute inset-0" />
+                      </Link>
+                    </div>
+                    <div className="group relative flex gap-x-6 rounded-md p-4 hover:bg-[#00ffc2] transition-all">
+                      <button
+                        onClick={handleSignOut}
+                        className="font-semibold text-gray-900"
+                      >
+                        Logout
+                        <span className="absolute inset-0" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </Popover.Panel>
+            </Transition>
+          </Popover>
           :
           <button 
             className="flex flex-row gap-2 items-center justify-between cursor-pointer px-2 py-2 hover:bg-[#00ffc3] hover:border-[#00ffc3] border rounded-md ease-in duration-100 text-white tracking-wide hover:text-[#303136]"
