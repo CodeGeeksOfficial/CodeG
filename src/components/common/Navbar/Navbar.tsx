@@ -11,22 +11,9 @@ type NavbarProps = {
   openAuthModal?: () => void
 };
 
-const settings = [{
-  name: 'Logout',
-}];
-
-
 const Navbar = ({openAuthModal}: NavbarProps) => {
-  const { signInWithGoogle,currentUser,logOut } = useAuth()
+  const { currentUser,logOut } = useAuth()
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-
-  const hangleGoogleLogin = async () => {
-    try {
-      let result = await signInWithGoogle()
-    } catch (error) {
-      console.log(error)
-    }
-  }
 
   const handleSignOut = () => {
     logOut()
@@ -68,16 +55,24 @@ const Navbar = ({openAuthModal}: NavbarProps) => {
               <Popover.Panel className="absolute right-0 z-10 mt-2 flex w-screen max-w-[256px] -translate-x-0">
                 <div className="w-screen max-w-[256px] flex-auto overflow-hidden rounded-xl bg-[#fbfbfb] text-sm leading-6 shadow-md shadow-black">
                   <div className="p-3">
-                    {settings.map((item) => (
-                      <div key={item.name} className="group relative flex gap-x-6 rounded-md p-4 hover:bg-[#00ffc2] transition-all">
-                        <button
-                        onClick={handleSignOut}
-                        className="font-semibold text-gray-900">
-                          {item.name}
+                    <div className="group relative flex gap-x-6 rounded-md p-4 hover:bg-[#00ffc2] transition-all">
+                      <Link
+                          href={'/dashboard'}
+                          className="font-semibold text-gray-900"
+                        >
+                          Dashboard
                           <span className="absolute inset-0" />
-                        </button>
-                      </div>
-                    ))}
+                      </Link>
+                    </div>
+                    <div className="group relative flex gap-x-6 rounded-md p-4 hover:bg-[#00ffc2] transition-all">
+                      <button
+                        onClick={handleSignOut}
+                        className="font-semibold text-gray-900"
+                      >
+                        Logout
+                        <span className="absolute inset-0" />
+                      </button>
+                    </div>
                   </div>
                 </div>
               </Popover.Panel>

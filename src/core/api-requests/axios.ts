@@ -52,6 +52,11 @@ const API_CALLS = {
   update_user: {
     URL:"user/update-user",
     method:"post"
+  },
+
+  create_battle: {
+    URL:"battle/create-battle",
+    method:"post"
   }
 };
 
