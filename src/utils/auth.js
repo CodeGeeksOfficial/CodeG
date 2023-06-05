@@ -23,7 +23,7 @@ export function AuthContextProvider({ children }) {
             data: {
               name: user?.displayName,
               email: user?.email,
-              photoURL:user?.photoURL
+              photoUrl:user?.photoURL
             },
           })
         }

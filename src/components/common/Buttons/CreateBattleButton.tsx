@@ -1,15 +1,28 @@
 import { useDisclosure } from '@chakra-ui/react';
-import React from 'react'
+import React, { useState } from 'react'
 import CreateBattleFormModal from '../Modals/CreateBattleFormModal';
+import FullScreenLoader from '../Loaders/FullScreenLoader';
+import { apiCall } from 'src/core/api-requests/axios';
 
 type Props = {}
 
 const CreateBattleButton = (props: Props) => {
+  const [loading, setLoading] = useState(false)
   const {isOpen, onOpen, onClose} = useDisclosure();
 
   const checkUserBattleStatus = async () => {
-    // If not in battle then execute this function
-    onOpen()
+    setLoading(true)
+    await apiCall({
+      key:'get_battle_id'
+    }).then((res)=>{
+      // If not in battle then execute this function
+      console.log(res)
+      setLoading(false)
+      // onOpen()
+    }).catch((error)=>{
+      console.log(error)
+      setLoading(false)
+    })
   }
 
   return (
@@ -21,6 +34,7 @@ const CreateBattleButton = (props: Props) => {
         Create Battle
       </button>
       <CreateBattleFormModal isOpen={isOpen} onClose={onClose}/>
+      <FullScreenLoader isOpen={loading}/>
     </div>
   )
 }
