@@ -49,6 +49,11 @@ const API_CALLS = {
     method: "get",
   },
 
+  create_user: {
+    URL:"user/create-user",
+    method:"post"
+  },
+
   update_user: {
     URL:"user/update-user",
     method:"post"
