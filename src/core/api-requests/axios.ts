@@ -67,6 +67,11 @@ const API_CALLS = {
   create_battle: {
     URL:"battle/create-battle",
     method:"post"
+  },
+
+  join_battle: {
+    URL:"battle/join-battle",
+    method:"get"
   }
 };
 
@@ -86,7 +91,7 @@ export const apiCall = async ({
   const { URL, method } = API_CALLS[key as objKey];
   const baseURL = "https://codeg-backend.onrender.com";
   const idToken = await firebaseAuth.currentUser?.getIdToken(true)
-  console.log(idToken)
+
   return new Promise((resolve, reject) => {
     axios({
       baseURL: baseURL,

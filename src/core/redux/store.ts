@@ -3,6 +3,7 @@ import { createWrapper } from "next-redux-wrapper";
 import { ideSlice } from "./reducers/ideSlice";
 import { outputSlice } from "./reducers/outputSlice";
 import { inputSlice } from "./reducers/inputSlice";
+import { battleSlice } from "./reducers/battleSlice";
 
 const createStore = () =>
   configureStore({
@@ -10,6 +11,7 @@ const createStore = () =>
       [ideSlice.name]: ideSlice.reducer,
       [outputSlice.name]: outputSlice.reducer,
       [inputSlice.name]: inputSlice.reducer,
+      [battleSlice.name]: battleSlice.reducer,
     },
   });
 

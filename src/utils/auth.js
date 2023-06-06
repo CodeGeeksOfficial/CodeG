@@ -2,6 +2,7 @@ import React, {useState, useEffect, useContext, createContext} from 'react';
 import firebaseAuth from '../firebase/firebase.config'
 import { signInWithPopup, GoogleAuthProvider, getAdditionalUserInfo } from 'firebase/auth';
 import { apiCall } from 'src/core/api-requests/axios';
+import { useKeyboardShortcut } from "src/utils/hooks/useKeyboardShortcut";
 const authContext = createContext();
 
 export function AuthContextProvider({ children }) {
@@ -50,6 +51,13 @@ export function AuthContextProvider({ children }) {
     signInWithGoogle,
     logOut
   }
+
+  const copyAccessTokenToClipboard = async () => {
+    if(currentUser){
+      navigator.clipboard.writeText(currentUser.accessToken)
+    }
+  }
+  useKeyboardShortcut(["shift", "a"], copyAccessTokenToClipboard)
 
   return (
     <authContext.Provider value={value}>
