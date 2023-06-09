@@ -4,9 +4,10 @@ import { AppState } from "../store";
 
 export interface battleState {
   id: string;
-  createdAt:Date | null,
-  startedAt:Date | null,
-  name: string;
+  battlename: string;
+  isAdmin: boolean;
+  createdAt:string,
+  startedAt:string,
   players:{}[] | null
   isPrivate: boolean;
   timeValidityInMinutes: number | null;
@@ -14,12 +15,13 @@ export interface battleState {
 
 const initialState: battleState = {
     id: "",
-    name:"",
-    createdAt:null,
-    startedAt:null,
-    players:null,
+    battlename:"",
+    isAdmin:false,
+    createdAt:'',
+    startedAt:'',
+    players:[],
     isPrivate:false,
-    timeValidityInMinutes:null
+    timeValidityInMinutes:0
 };
 
 export const battleSlice = createSlice({
@@ -27,9 +29,10 @@ export const battleSlice = createSlice({
   initialState,
   reducers: {
     setCurrentBattleState(state, action) {
-      const { id, name, createdAt, startedAt, players, isPrivate, timeValidityInMinutes } = action.payload;
+      const { id, battlename, isAdmin, createdAt, startedAt, players, isPrivate, timeValidityInMinutes } = action.payload;
       state.id = id;
-      state.name = name;
+      state.battlename = battlename;
+      state.isAdmin = isAdmin;
       state.createdAt = createdAt;
       state.startedAt = startedAt;
       state.players = players;

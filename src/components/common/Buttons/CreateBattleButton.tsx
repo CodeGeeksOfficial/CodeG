@@ -19,7 +19,7 @@ const CreateBattleButton = (props: Props) => {
     }).then((res:any)=>{
       let battleId:string = res.data
       if(res.data){
-        router.push('/battle/' + battleId)
+        // router.push('/battle/' + battleId)
       }else{
         onOpen()
       }

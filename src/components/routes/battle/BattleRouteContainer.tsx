@@ -7,7 +7,7 @@ import { apiCall } from 'src/core/api-requests/axios'
 
 type Props = {}
 
-const BattleContainer = (props: Props) => {
+const BattleRouteContainer = (props: Props) => {
   const [loading, setLoading] = useState(true)
   const router = useRouter()
   useEffect(()=>{
@@ -39,4 +39,4 @@ const BattleContainer = (props: Props) => {
   )
 }
 
-export default BattleContainer
+export default BattleRouteContainer
