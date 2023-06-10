@@ -4,27 +4,28 @@ import JoinBattleFormModal from '../Modals/JoinBattleFormModal';
 import FullScreenLoader from '../Loaders/FullScreenLoader';
 import { apiCall } from 'src/core/api-requests/axios';
 import { useRouter } from 'next/router';
+import Button from '../Button/Button';
 
 type Props = {}
 
 const JoinBattleButton = (props: Props) => {
   const [loading, setLoading] = useState(false)
-  const {isOpen, onOpen, onClose} = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter()
 
   const checkUserBattleStatus = async () => {
     setLoading(true)
     await apiCall({
-      key:'get_battle_id'
-    }).then((res:any)=>{
-      let battleId:string = res.data
-      if(battleId){
+      key: 'get_battle_id'
+    }).then((res: any) => {
+      let battleId: string = res.data
+      if (battleId) {
         // router.push('/battle/' + battleId)
-      }else{
+      } else {
         onOpen()
       }
       setLoading(false)
-    }).catch((error)=>{
+    }).catch((error) => {
       console.log(error)
       setLoading(false)
     })
@@ -32,14 +33,15 @@ const JoinBattleButton = (props: Props) => {
 
   return (
     <div>
-      <button
-        className = 'text-sm sm:text-base text-white border-2 hover:border-transparent py-2 px-4 sm:px-8 rounded-md hover:bg-[#00ffc3] hover:text-[#303136] ease-in duration-100'
+      <Button
+        className='text-sm sm:text-base text-white border-2 hover:border-transparent py-2 w-28 sm:w-36 flex justify-center rounded-md hover:bg-[#00ffc3] hover:text-[#303136] ease-in duration-100'
         onClick={checkUserBattleStatus}
+        loading={loading}
+        loaderColor={"white"}
       >
         Join Battle
-      </button>
-      <JoinBattleFormModal isOpen={isOpen} onClose={onClose}/>
-      <FullScreenLoader isOpen={loading}/>
+      </Button>
+      <JoinBattleFormModal isOpen={isOpen} onClose={onClose} />
     </div>
   )
 }
