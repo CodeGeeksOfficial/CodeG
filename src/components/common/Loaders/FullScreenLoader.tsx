@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from 'react'
-import Backdrop from "@mui/material/Backdrop";
-import CircularProgress from "@mui/material/CircularProgress";
+import { HashLoader } from 'react-spinners';
 
 type Props = {
-  isOpen:boolean
+  isOpen: boolean
 }
 
-const FullScreenLoader = ({isOpen}: Props) => {
+const FullScreenLoader = ({ isOpen }: Props) => {
 
-  return (
-    <Backdrop
-      sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-      open={isOpen}
-    >
-      <CircularProgress color="inherit" />
-    </Backdrop>
-  )
+  if (isOpen) {
+    return (
+      <div className='absolute backdrop-blur-sm top-0 left-0 w-screen h-screen flex items-center justify-center'>
+        <div className='space-y-2'>
+          <HashLoader color='white' />
+          <p className='text-white'>Loading...</p>
+        </div>
+      </div>
+    )
+  } else {
+    return null;
+  }
 }
 
 export default FullScreenLoader
