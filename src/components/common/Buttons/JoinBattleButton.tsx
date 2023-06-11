@@ -1,4 +1,4 @@
-import { useDisclosure } from '@chakra-ui/react';
+import { useDisclosure, useToast } from '@chakra-ui/react';
 import React, { useState } from 'react'
 import JoinBattleFormModal from '../Modals/JoinBattleFormModal';
 import FullScreenLoader from '../Loaders/FullScreenLoader';
@@ -12,6 +12,7 @@ const JoinBattleButton = (props: Props) => {
   const [loading, setLoading] = useState(false)
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter()
+  const toast = useToast()
 
   const checkUserBattleStatus = async () => {
     setLoading(true)
@@ -21,6 +22,14 @@ const JoinBattleButton = (props: Props) => {
       let battleId: string = res.data
       if (battleId) {
         // router.push('/battle/' + battleId)
+        toast({
+          title: 'Already in a battle',
+          description: "Do you want to join battle again ?",
+          status: 'success',
+          duration: 10000,
+          isClosable: true,
+          position:'top'
+        })
       } else {
         onOpen()
       }

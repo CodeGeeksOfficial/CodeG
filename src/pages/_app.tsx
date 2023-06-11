@@ -5,6 +5,7 @@ import { wrapper } from "src/core/redux/store";
 import { AuthContextProvider } from '../utils/auth'
 import "nprogress/nprogress.css";
 import dynamic from "next/dynamic";
+import { ChakraProvider } from "@chakra-ui/react";
 
 const TopProgressBar = dynamic(
   () => {
@@ -20,10 +21,12 @@ function App({ Component, pageProps }: AppProps) {
         {process.env.NODE_ENV === "production" && <title>CodeG</title>}
       </Head>
       <AuthContextProvider>
-        <TopProgressBar/>
-        <div className="selection:bg-[#00ffc38a]">
-          <Component {...pageProps} />
-        </div>
+        <ChakraProvider>
+          <TopProgressBar/>
+          <div className="selection:bg-[#00ffc38a]">
+            <Component {...pageProps} />
+          </div>
+        </ChakraProvider>
       </AuthContextProvider>
     </>
   );
