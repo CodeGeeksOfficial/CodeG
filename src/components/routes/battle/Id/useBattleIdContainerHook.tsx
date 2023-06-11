@@ -1,5 +1,6 @@
 import router from 'next/router';
 import React, { useEffect, useState } from 'react'
+import { apiCall } from 'src/core/api-requests/axios';
 
 const useBattleIdContainerHook = () => {
 
@@ -18,14 +19,19 @@ const useBattleIdContainerHook = () => {
 
   const fetchBattleAndUserDetails = async () => {
 
-    const userCurrentBattleIdRes = null;
+    const userCurrentBattleIdProcess: any = apiCall({ key: "get_battle_id" });
+    const battleStatusProcess: any = apiCall({ key: "battle_status", params: { battle_id: battleId } });
+
+    const userCurrentBattleIdRes = (await userCurrentBattleIdProcess).data;
+    const battleStatusRes = (await battleStatusProcess).data
+
     if (userCurrentBattleIdRes !== null && userCurrentBattleIdRes !== battleId) {
       router.push(`/battle/${userCurrentBattleIdRes}`)
       return;
     }
-    setUserCurrentBattleId(userCurrentBattleIdRes);
 
-    setBattleStatus({ status: null });
+    setUserCurrentBattleId(userCurrentBattleIdRes);
+    setBattleStatus(battleStatusRes);
 
     setLoading(false);
   }

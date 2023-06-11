@@ -77,6 +77,11 @@ const API_CALLS = {
   join_battle: {
     URL:"battle/join-battle",
     method:"get"
+  },
+
+  battle_status:{
+    URL: "/battle/status",
+    method: "get"
   }
 };
 
