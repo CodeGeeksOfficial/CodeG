@@ -8,7 +8,6 @@ type Props = {}
 const Index = (props: Props) => {
   return (
     <div className='bg-[#141519] h-screen text-white'>
-      <Navbar />
       <BattleIdContainer />
     </div>
   )

@@ -24,7 +24,7 @@ const Navbar = ({openAuthModal}: NavbarProps) => {
   };
 
   return (
-    <div className="sticky top-0 z-40 w-screen h-[8vh] bg-[#1E1F25] flex items-center px-4 shadow-zinc-900 shadow-md">
+    <div className="sticky top-0 z-40 h-[8vh] bg-[#1E1F25] flex items-center px-4 shadow-zinc-900 shadow-md">
       <Link
         href="/"
         className="text-2xl sm:text-3xl flex font-semibold justify-center items-center lg:justify-start"

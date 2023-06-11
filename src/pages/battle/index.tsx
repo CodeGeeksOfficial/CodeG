@@ -8,9 +8,9 @@ type Props = {}
 const battle = (props: Props) => {
 
   return (
-    <div className='h-screen bg-[#141519]'>
-      <Navbar/>
-      <BattleRouteContainer/>
+    <div className='bg-[#141519] min-h-screen'>
+      <Navbar />
+      <BattleRouteContainer />
     </div>
   )
 }

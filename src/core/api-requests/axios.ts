@@ -50,37 +50,42 @@ const API_CALLS = {
   },
 
   create_user: {
-    URL:"user/create-user",
-    method:"post"
+    URL: "user/create-user",
+    method: "post"
   },
 
   update_user: {
-    URL:"user/update-user",
-    method:"post"
+    URL: "user/update-user",
+    method: "post"
   },
 
   get_battle_id: {
-    URL:"user/get-battle-id",
-    method:"get"
+    URL: "user/get-battle-id",
+    method: "get"
   },
 
   get_details_by_id: {
-    URL:"user/get-details-by-id",
-    method:"get"
+    URL: "user/get-details-by-id",
+    method: "get"
   },
-  
+
   create_battle: {
-    URL:"battle/create-battle",
-    method:"post"
+    URL: "battle/create-battle",
+    method: "post"
   },
 
   join_battle: {
-    URL:"battle/join-battle",
-    method:"get"
+    URL: "battle/join-battle",
+    method: "post"
   },
 
-  battle_status:{
-    URL: "/battle/status",
+  get_battle_details_by_id: {
+    URL: "/battle/get-details-by-id",
+    method: "get"
+  },
+
+  get_public_battles: {
+    URL: "/battle/get-public-battles",
     method: "get"
   }
 };

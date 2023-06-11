@@ -11,29 +11,29 @@ type Props = {}
 
 const BattleIdContainer = (props: Props) => {
 
-  const { loading, battleStatus, userCurrentBattleId, battleId } = useBattleIdContainerHook();
+  const { loading, battleData, userCurrentBattleId, battleId, setUserCurrentBattleId } = useBattleIdContainerHook();
 
   if (loading) {
     return <FullScreenLoader isOpen />
   }
 
-  if (battleStatus.status === null) {
+  if (battleData === null) {
     return <BattleNotFoundScreen />
   }
 
-  if (battleStatus.status === "completed") {
-    return <BattleEndedScreen />
+  if (battleData.status === "completed") {
+    return <BattleEndedScreen battleData={battleData} />
   }
 
-  if ((battleStatus.status === "arena" || battleStatus.status === "lobby") && userCurrentBattleId === battleId) {
+  if ((battleData.status === "arena" || battleData.status === "lobby") && userCurrentBattleId === battleId) {
     return <LiveBattleContainer />
   }
 
-  if (battleStatus.status === "lobby" && userCurrentBattleId === null) {
+  if (battleData.status === "lobby" && userCurrentBattleId === null) {
     return <JoinBattleScreen />
   }
 
-  if (battleStatus.status === "arena") {
+  if (battleData.status === "arena") {
     return <BattleAlreadyStartedScreen />
   }
 

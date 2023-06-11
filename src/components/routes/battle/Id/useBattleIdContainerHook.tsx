@@ -1,12 +1,16 @@
 import router from 'next/router';
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { apiCall } from 'src/core/api-requests/axios';
+import { setCurrentBattleState } from 'src/core/redux/reducers/battleSlice';
 
 const useBattleIdContainerHook = () => {
 
   const [loading, setLoading] = useState(true);
-  const [battleStatus, setBattleStatus] = useState<any>();
   const [userCurrentBattleId, setUserCurrentBattleId] = useState<any>();
+
+  const battleData = useSelector((state: any) => state.battle)
+  const dispatch = useDispatch();
 
   // If userCurrentBattleId!==null and userCurrentBattleId!==battleId, redirect to his ongoing battle and show a toast message.
   // If Battle status is null => show BattleNotFoundScreen
@@ -20,10 +24,10 @@ const useBattleIdContainerHook = () => {
   const fetchBattleAndUserDetails = async () => {
 
     const userCurrentBattleIdProcess: any = apiCall({ key: "get_battle_id" });
-    const battleStatusProcess: any = apiCall({ key: "battle_status", params: { battle_id: battleId } });
+    const battleDataProcess: any = apiCall({ key: "get_battle_details_by_id", params: { battle_id: battleId } });
 
     const userCurrentBattleIdRes = (await userCurrentBattleIdProcess).data;
-    const battleStatusRes = (await battleStatusProcess).data
+    const battleDataRes = (await battleDataProcess).data
 
     if (userCurrentBattleIdRes !== null && userCurrentBattleIdRes !== battleId) {
       router.push(`/battle/${userCurrentBattleIdRes}`)
@@ -31,7 +35,8 @@ const useBattleIdContainerHook = () => {
     }
 
     setUserCurrentBattleId(userCurrentBattleIdRes);
-    setBattleStatus(battleStatusRes);
+
+    dispatch(setCurrentBattleState(battleDataRes))
 
     setLoading(false);
   }
@@ -40,7 +45,7 @@ const useBattleIdContainerHook = () => {
     fetchBattleAndUserDetails();
   }, [battleId])
 
-  return { loading, battleStatus, userCurrentBattleId, battleId }
+  return { loading, battleData, userCurrentBattleId, battleId, setUserCurrentBattleId }
 }
 
 export default useBattleIdContainerHook

@@ -21,15 +21,15 @@ const JoinBattleButton = (props: Props) => {
     }).then((res: any) => {
       let battleId: string = res.data
       if (battleId) {
-        // router.push('/battle/' + battleId)
         toast({
-          title: 'Already in a battle',
-          description: "Do you want to join battle again ?",
-          status: 'success',
-          duration: 10000,
+          title: 'You already are in a battle',
+          description: "We've redirected you to your battle. Happy coding!",
+          status: 'info',
+          duration: 5000,
           isClosable: true,
-          position:'top'
-        })
+          position: 'top'
+        });
+        router.push('/battle/' + battleId)
       } else {
         onOpen()
       }
