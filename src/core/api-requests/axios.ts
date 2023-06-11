@@ -50,18 +50,43 @@ const API_CALLS = {
   },
 
   create_user: {
-    URL:"user/create-user",
-    method:"post"
+    URL: "user/create-user",
+    method: "post"
   },
 
   update_user: {
-    URL:"user/update-user",
-    method:"post"
+    URL: "user/update-user",
+    method: "post"
+  },
+
+  get_battle_id: {
+    URL: "user/get-battle-id",
+    method: "get"
+  },
+
+  get_details_by_id: {
+    URL: "user/get-details-by-id",
+    method: "get"
   },
 
   create_battle: {
-    URL:"battle/create-battle",
-    method:"post"
+    URL: "battle/create-battle",
+    method: "post"
+  },
+
+  join_battle: {
+    URL: "battle/join-battle",
+    method: "post"
+  },
+
+  get_battle_details_by_id: {
+    URL: "/battle/get-details-by-id",
+    method: "get"
+  },
+
+  get_public_battles: {
+    URL: "/battle/get-public-battles",
+    method: "get"
   }
 };
 
@@ -80,7 +105,9 @@ export const apiCall = async ({
 }) => {
   const { URL, method } = API_CALLS[key as objKey];
   const baseURL = "https://codeg-backend.onrender.com";
+  // const baseURL = "http://localhost:7000";
   const idToken = await firebaseAuth.currentUser?.getIdToken(true)
+
   return new Promise((resolve, reject) => {
     axios({
       baseURL: baseURL,

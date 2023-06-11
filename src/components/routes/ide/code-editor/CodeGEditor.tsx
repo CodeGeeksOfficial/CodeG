@@ -5,10 +5,9 @@ import { apiCall } from "src/core/api-requests/axios";
 import { selectIdeState } from "src/core/redux/reducers/ideSlice";
 import { currentinputState } from "src/core/redux/reducers/inputSlice";
 import { setOutput } from "src/core/redux/reducers/outputSlice";
-import Backdrop from "@mui/material/Backdrop";
-import CircularProgress from "@mui/material/CircularProgress";
 import { withAuthModal } from "src/components/common/Modals/Auth";
 import { useAuth } from "src/utils/auth";
+import FullScreenLoader from "src/components/common/Loaders/FullScreenLoader";
 
 type Props = {
   route?: string;
@@ -128,13 +127,7 @@ const CodeGEditor = ({ route, questionId, openAuthModal }: Props) => {
           </button>
         ) : null}
       </div>
-      <Backdrop
-        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={isCodeCompiling}
-        // onClick={handleClose}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
+      <FullScreenLoader isOpen={isCodeCompiling}/>
     </div>
   );
 };

@@ -3,7 +3,7 @@ import React, { Fragment } from "react";
 import Logo from "src/lib/assets/logo.svg";
 import { useAuth } from "src/utils/auth";
 import GoogleIcon from 'src/lib/assets/icons/GoogleIcon.svg'
-import Avatar from '@mui/material/Avatar';
+import Image from "next/image";
 import { withAuthModal } from "src/components/common/Modals/Auth";
 import { Popover, Transition } from "@headlessui/react";
 
@@ -24,7 +24,7 @@ const Navbar = ({openAuthModal}: NavbarProps) => {
   };
 
   return (
-    <div className="sticky top-0 z-40 w-screen h-[8vh] bg-[#1E1F25] flex items-center px-4 shadow-zinc-900 shadow-md">
+    <div className="sticky top-0 z-40 h-[8vh] bg-[#1E1F25] flex items-center px-4 shadow-zinc-900 shadow-md">
       <Link
         href="/"
         className="text-2xl sm:text-3xl flex font-semibold justify-center items-center lg:justify-start"
@@ -40,7 +40,7 @@ const Navbar = ({openAuthModal}: NavbarProps) => {
         {currentUser ? 
           <Popover className="relative">
             <Popover.Button className="inline-flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
-              <Avatar alt="Profile Photo" src={currentUser?.photoURL} />
+              <Image src={currentUser?.photoURL} width={80} height={80} alt="Profile Photo" className="h-10 w-10 rounded-full"/>
             </Popover.Button>
 
             <Transition

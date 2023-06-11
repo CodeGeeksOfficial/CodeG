@@ -19,7 +19,7 @@ const CommonModal = ({isOpen,onClose,className,children}: CommonModal) => {
         className="fixed z-50 inset-0 overflow-y-auto"
         onClose={onClose}
       >
-        <div className="flex justify-center h-screen items-center sm:p-5">
+        <div className="flex justify-center h-screen items-center sm:p-5 backdrop-blur-sm">
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
