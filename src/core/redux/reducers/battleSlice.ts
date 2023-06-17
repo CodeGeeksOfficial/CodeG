@@ -9,7 +9,7 @@ export const battleSlice = createSlice({
   initialState,
   reducers: {
     setCurrentBattleState(state, action) {
-      return { ...action.payload }
+      return action.payload
     },
   },
 

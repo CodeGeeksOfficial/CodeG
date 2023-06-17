@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import FullScreenLoader from 'src/components/common/Loaders/FullScreenLoader'
 import { withFullScreenAuth } from 'src/components/common/Modals/Auth'
 import Navbar from 'src/components/common/Navbar/Navbar'
-import LiveBattleContainer from 'src/components/routes/battle/LiveBattleContainer'
 import { apiCall } from 'src/core/api-requests/axios'
 import { getFirestore, doc, getDoc, onSnapshot } from "firebase/firestore";
 import { firebaseApp } from 'src/firebase/firebase.config'
@@ -138,7 +137,6 @@ const BattleWithId = (props: Props) => {
         <FullScreenLoader isOpen={loading}/>
         :
         <div>
-          <LiveBattleContainer/>
         </div>
       }
     </div>

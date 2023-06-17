@@ -40,7 +40,7 @@ const BattleIdContainer = (props: Props) => {
 
   return (
     <div>
-
+      Something went wrong!
     </div>
   )
 }
