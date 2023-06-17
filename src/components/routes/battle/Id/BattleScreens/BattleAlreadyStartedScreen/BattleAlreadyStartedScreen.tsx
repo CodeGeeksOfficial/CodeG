@@ -5,12 +5,13 @@ import CreateBattleButton from 'src/components/common/Buttons/CreateBattleButton
 import JoinBattleButton from 'src/components/common/Buttons/JoinBattleButton'
 import PeopleBattle from 'src/lib/assets/icons/people-battle.svg'
 import useBattleAlreadyStartedScreenHook from './useBattleAlreadyStartedScreenHook'
+import BattleListingCardSkeletonLoader from '../../../index/BattleListingCard/BattleListingCardSkeletonLoader'
 
 type Props = {}
 
 const BattleAlreadyStartedScreen = ({ }: Props) => {
 
-  const { battleData, remainingTime } = useBattleAlreadyStartedScreenHook()
+  const { battleData, remainingTime, loading, userDataMappedLeaderboard } = useBattleAlreadyStartedScreenHook()
 
   return (
     <div className='py-10 px-20 space-y-10'>
@@ -53,14 +54,18 @@ const BattleAlreadyStartedScreen = ({ }: Props) => {
       <div className='text-white'>
         <p className='font-medium text-gray-200'>Current Leaderboard:</p>
         <div className='flex py-2 px-4 bg-gray-800 rounded-lg my-2 font-medium'>
-          <p className='w-[80%]'>Name</p>
+          <p className='w-[60%]'>Name</p>
+          <p className='w-[20%]'>Rank</p>
           <p className='w-[20%]'>Score</p>
         </div>
-        {Object.keys(battleData.players).map((player: any, index: number) =>
-          <div key={index} className='flex py-2 px-4 bg-gray-800 rounded-lg my-2 font-medium'>
-            <p className='w-[80%]'>Name</p>
-            <p className='w-[20%]'>{battleData.players[player].score}</p>
-          </div>)}
+
+        {loading ? <BattleListingCardSkeletonLoader /> : (
+          userDataMappedLeaderboard.map((player: any, index: number) => <div className='flex py-2 px-4 bg-gray-700 rounded-lg my-2' key={index}>
+            <p className='w-[60%]'>{player.userData.name}</p>
+            <p className='w-[20%]'>{player.rank}</p>
+            <p className='w-[20%]'>{player.score}</p>
+          </div>))}
+
         <div className='flex gap-2'>
           <div className='w-5'>
             <InformationCircleIcon />

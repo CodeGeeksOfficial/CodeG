@@ -2,6 +2,7 @@ import { doc, getFirestore, onSnapshot } from 'firebase/firestore'
 import router from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { apiCall } from 'src/core/api-requests/axios'
 import { setCurrentBattleState } from 'src/core/redux/reducers/battleSlice'
 import { firebaseApp } from 'src/firebase/firebase.config'
 
@@ -19,10 +20,23 @@ const useLiveBattleContainerHook = () => {
       let docData = doc.data();
 
       if (docData) {
+        const usersData = (battle.usersData) || {};
+        let newUsersData: any = {};
+
+        await Promise.all(docData.activeUsers.map(async (userId: any) => {
+          if (usersData[userId]) {
+            newUsersData[userId] = usersData[userId]
+          } else {
+            const userData = (await apiCall({ key: "get_details_by_id", params: { user_id: userId } }) as any).data
+            newUsersData[userId] = userData;
+          }
+        }));
+
         dispatch(setCurrentBattleState({
           ...docData,
           id: doc.id,
           status: (battle && battle.status) ? battle.status : (docData.startedAt ? "arena" : "lobby"),
+          usersData: newUsersData,
           createdAt: docData.createdAt.toDate().getTime(),
           startedAt: docData.startedAt ? docData.startedAt.toDate().getTime() : null
         }));

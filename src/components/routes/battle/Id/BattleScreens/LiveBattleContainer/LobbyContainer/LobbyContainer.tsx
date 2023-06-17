@@ -1,6 +1,9 @@
 import React from 'react'
 import PersonGaming from 'src/lib/assets/icons/person-gaming.svg'
 import { useSelector } from 'react-redux'
+import LobbyPlayerListItem from './LobbyPlayerListItem/LobbyPlayerListItem'
+import Image from 'next/image'
+import Button from 'src/components/common/Button/Button'
 
 type Props = {}
 
@@ -30,11 +33,17 @@ const LobbyContainer = (props: Props) => {
 
       <div className='text-white'>
         <p className='font-medium text-gray-200'>Players in Lobby:</p>
-        <div className='flex py-2 px-4 bg-gray-800 rounded-lg my-2 font-medium'>
-          <p className=''>Photo</p>
-          <p className=''>Name</p>
-        </div>
+        {battle.activeUsers.map((userId: any, index: number) => <LobbyPlayerListItem userId={userId} key={index} />)}
       </div>
+
+      <Button
+        // loading={joiningBattleLoader}
+        // onClick={onJoinClick}
+        className='flex py-3 px-4 bg-gray-700 text-lg hover:bg-gray-600 duration-200 rounded-lg mb-6 font-bold justify-center w-full'
+      >
+        Start Battle
+      </Button>
+
     </div>
   )
 }

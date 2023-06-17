@@ -10,7 +10,7 @@ const LiveBattleContainer = (props: Props) => {
 
   const { battle } = useLiveBattleContainerHook();
 
-  if (!battle) {
+  if (!battle || !battle.usersData) {
     return <FullScreenLoader isOpen />
   } else if (battle.startedAt) {
     return <ArenaContainer />

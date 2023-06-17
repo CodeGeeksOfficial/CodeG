@@ -106,7 +106,7 @@ export const apiCall = async ({
   const { URL, method } = API_CALLS[key as objKey];
   const baseURL = "https://codeg-backend.onrender.com";
   // const baseURL = "http://localhost:7000";
-  const idToken = await firebaseAuth.currentUser?.getIdToken(true)
+  const idToken = await firebaseAuth.currentUser?.getIdToken()
 
   return new Promise((resolve, reject) => {
     axios({

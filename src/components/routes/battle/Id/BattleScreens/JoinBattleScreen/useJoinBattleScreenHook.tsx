@@ -1,12 +1,19 @@
 import { useToast } from '@chakra-ui/react'
 import router from 'next/router'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { apiCall } from 'src/core/api-requests/axios'
 
 const useJoinBattleScreenHook = () => {
 
-  const [joiningBattleLoader, setJoiningBattleLoader] = useState(false)
+  const [usersLoading, setUsersLoading] = useState(true);
+  const [usersData, setUsersData] = useState<any>([]);
+  const [joiningBattleLoader, setJoiningBattleLoader] = useState(false);
+
   const battleId = router.query.id;
+
+  const battleData = useSelector((state: any) => state.battle);
+
   const toast = useToast();
 
   const onJoinClick = () => {
@@ -46,7 +53,23 @@ const useJoinBattleScreenHook = () => {
     })
   }
 
-  return { joiningBattleLoader, onJoinClick }
+  const getPlayersData = async () => {
+    let usersData: any = battleData.activeUsers.map(async (user_id: any) => {
+      const userData = (await apiCall({ key: "get_details_by_id", params: { user_id: user_id } }) as any).data
+      return userData
+    })
+
+    usersData = await Promise.all(usersData);
+    setUsersData(usersData);
+    setUsersLoading(false);
+
+  }
+
+  useEffect(() => {
+    getPlayersData();
+  }, [])
+
+  return { joiningBattleLoader, onJoinClick, usersLoading, usersData, battleData }
 }
 
 export default useJoinBattleScreenHook
