@@ -5,12 +5,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { apiCall } from 'src/core/api-requests/axios'
 import { setCurrentBattleState } from 'src/core/redux/reducers/battleSlice'
 import { firebaseApp } from 'src/firebase/firebase.config'
+import { useAuth } from 'src/utils/auth'
 
 const useLiveBattleContainerHook = () => {
 
   const battleId = router.query.id
   const dispatch = useDispatch();
   const battle = useSelector((state: any) => state.battle)
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     const db = getFirestore(firebaseApp);
@@ -20,6 +22,11 @@ const useLiveBattleContainerHook = () => {
       let docData = doc.data();
 
       if (docData) {
+
+        if (docData.activeUsers && !docData.activeUsers.includes(currentUser.uid)) {
+          router.push('/battle')
+        }
+
         const usersData = (battle.usersData) || {};
         let newUsersData: any = {};
 
@@ -32,13 +39,19 @@ const useLiveBattleContainerHook = () => {
           }
         }));
 
+        let isUserAdmin = false;
+        if (docData.activeUsers && docData.activeUsers.length > 0 && docData.activeUsers[0] === currentUser.uid) {
+          isUserAdmin = true;
+        }
+
         dispatch(setCurrentBattleState({
           ...docData,
           id: doc.id,
           status: (battle && battle.status) ? battle.status : (docData.startedAt ? "arena" : "lobby"),
           usersData: newUsersData,
           createdAt: docData.createdAt.toDate().getTime(),
-          startedAt: docData.startedAt ? docData.startedAt.toDate().getTime() : null
+          startedAt: docData.startedAt ? docData.startedAt.toDate().getTime() : null,
+          isUserAdmin: isUserAdmin
         }));
       }
     })

@@ -87,6 +87,11 @@ const API_CALLS = {
   get_public_battles: {
     URL: "/battle/get-public-battles",
     method: "get"
+  },
+
+  start_battle: {
+    URL: "/battle/start-battle",
+    method: "post"
   }
 };
 

@@ -4,12 +4,13 @@ import { useSelector } from 'react-redux'
 import LobbyPlayerListItem from './LobbyPlayerListItem/LobbyPlayerListItem'
 import Image from 'next/image'
 import Button from 'src/components/common/Button/Button'
+import useLobbyContainerHook from './useLobbyContainerHook'
 
 type Props = {}
 
 const LobbyContainer = (props: Props) => {
 
-  const battle = useSelector((state: any) => state.battle)
+  const { battle, startBattleButtonLoading, startBattleHandler } = useLobbyContainerHook();
 
   return (
     <div className='py-10 px-20 space-y-10'>
@@ -36,13 +37,13 @@ const LobbyContainer = (props: Props) => {
         {battle.activeUsers.map((userId: any, index: number) => <LobbyPlayerListItem userId={userId} key={index} />)}
       </div>
 
-      <Button
-        // loading={joiningBattleLoader}
-        // onClick={onJoinClick}
+      {battle.isUserAdmin && <Button
+        loading={startBattleButtonLoading}
+        onClick={startBattleHandler}
         className='flex py-3 px-4 bg-gray-700 text-lg hover:bg-gray-600 duration-200 rounded-lg mb-6 font-bold justify-center w-full'
       >
         Start Battle
-      </Button>
+      </Button>}
 
     </div>
   )

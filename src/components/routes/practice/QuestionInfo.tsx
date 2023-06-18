@@ -9,7 +9,7 @@ type Props = {
 const QuestionInfo = ({ question }: Props) => {
   return (
     <div className="w-full h-full bg-[#1e1e1e] text-[#e1e1e1] border-r border-[#313131] px-5 pb-5">
-      <PracticeNavbar />
+      {/* <PracticeNavbar /> */}
       <section className="w-full h-[calc(100%-60px)]">
         <Description question={question} />
       </section>
