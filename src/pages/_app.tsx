@@ -1,6 +1,7 @@
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import "../styles/globals.css";
+import { Provider } from "react-redux";
 import { wrapper } from "src/core/redux/store";
 import { AuthContextProvider } from '../utils/auth'
 import "nprogress/nprogress.css";
@@ -14,22 +15,25 @@ const TopProgressBar = dynamic(
   { ssr: false },
 );
 
-function App({ Component, pageProps }: AppProps) {
+function App({ Component, ...rest }: AppProps) {
+  const { store, props } = wrapper.useWrappedStore(rest);
   return (
     <>
       <Head>
         {process.env.NODE_ENV === "production" && <title>CodeG</title>}
       </Head>
-      <AuthContextProvider>
-        <ChakraProvider>
-          <TopProgressBar/>
-          <div className="selection:bg-[#00ffc38a]">
-            <Component {...pageProps} />
-          </div>
-        </ChakraProvider>
-      </AuthContextProvider>
+      <Provider store={store}>
+        <AuthContextProvider>
+          <ChakraProvider>
+            <TopProgressBar/>
+            <div className="selection:bg-[#00ffc38a]">
+              <Component {...props.pageProps} />
+            </div>
+          </ChakraProvider>
+        </AuthContextProvider>
+      </Provider>
     </>
   );
 }
 
-export default wrapper.withRedux(App);
+export default App;

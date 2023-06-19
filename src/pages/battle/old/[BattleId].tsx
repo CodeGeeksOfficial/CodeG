@@ -58,7 +58,7 @@ const BattleWithId = (props: Props) => {
   const fetchPlayerData = async (usersArray:{}[]) => {
     const promises = usersArray.map(async (playerBattleData:any) => {
       const playerProfileData:any = await apiCall({
-        key:'get_details_by_id',
+        key:'get_user_details_by_id',
         params:{
           user_id:playerBattleData?.id
         }

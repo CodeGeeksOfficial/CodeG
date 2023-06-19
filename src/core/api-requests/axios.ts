@@ -64,7 +64,7 @@ const API_CALLS = {
     method: "get"
   },
 
-  get_details_by_id: {
+  get_user_details_by_id: {
     URL: "user/get-details-by-id",
     method: "get"
   },
@@ -79,6 +79,11 @@ const API_CALLS = {
     method: "post"
   },
 
+  leave_battle: {
+    URL: "battle/remove-from-battle",
+    method: "post"
+  },
+
   get_battle_details_by_id: {
     URL: "/battle/get-details-by-id",
     method: "get"
@@ -87,6 +92,11 @@ const API_CALLS = {
   get_public_battles: {
     URL: "/battle/get-public-battles",
     method: "get"
+  },
+
+  start_battle: {
+    URL: "/battle/start-battle",
+    method: "post"
   }
 };
 

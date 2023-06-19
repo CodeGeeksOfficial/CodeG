@@ -55,7 +55,7 @@ const useJoinBattleScreenHook = () => {
 
   const getPlayersData = async () => {
     let usersData: any = battleData.activeUsers.map(async (user_id: any) => {
-      const userData = (await apiCall({ key: "get_details_by_id", params: { user_id: user_id } }) as any).data
+      const userData = (await apiCall({ key: "get_user_details_by_id", params: { user_id: user_id } }) as any).data
       return userData
     })
 
