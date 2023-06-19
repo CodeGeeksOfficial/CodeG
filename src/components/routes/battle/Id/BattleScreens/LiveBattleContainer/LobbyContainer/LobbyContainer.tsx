@@ -5,11 +5,16 @@ import LobbyPlayerListItem from './LobbyPlayerListItem/LobbyPlayerListItem'
 import Image from 'next/image'
 import Button from 'src/components/common/Button/Button'
 import useLobbyContainerHook from './useLobbyContainerHook'
+import { useClipboard } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
 
 type Props = {}
 
 const LobbyContainer = (props: Props) => {
-
+  const {asPath} = useRouter()
+  const copyURL = "https://codeg.netlify.app" + asPath
+  const { onCopy, value, setValue, hasCopied } = useClipboard(copyURL);
+  
   const { battle, startBattleButtonLoading, startBattleHandler, leaveBattleButtonLoading, handleLeaveBattle } = useLobbyContainerHook();
 
   return (
@@ -22,12 +27,20 @@ const LobbyContainer = (props: Props) => {
               Welcome to the Lobby<br />Where Excitement and Possibilities Await!
             </p>
             <p className='text-white opacity-60'>Invite Your Friends to Join the Lobby and Amplify the Fun!</p>
+            <div 
+              className='text-sm flex border border-gray-100 max-w-[300px] rounded-md p-3 text-white opacity-60'
+            >
+              <div className='truncate'>
+                {copyURL}
+              </div>
+              <button
+                onClick={onCopy}
+                className='flex items-center justify-center w-[110px]'
+              >
+                {hasCopied ? "Copied" : "Copy"}
+              </button>
+            </div>
           </div>
-
-          <div>
-            <p></p>
-          </div>
-
         </div>
         <PersonGaming className="w-60" />
       </div>
