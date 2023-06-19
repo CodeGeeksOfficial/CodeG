@@ -10,7 +10,7 @@ type Props = {}
 
 const LobbyContainer = (props: Props) => {
 
-  const { battle, startBattleButtonLoading, startBattleHandler } = useLobbyContainerHook();
+  const { battle, startBattleButtonLoading, startBattleHandler, leaveBattleButtonLoading, handleLeaveBattle } = useLobbyContainerHook();
 
   return (
     <div className='py-10 px-20 space-y-10'>
@@ -34,16 +34,24 @@ const LobbyContainer = (props: Props) => {
 
       <div className='text-white'>
         <p className='font-medium text-gray-200'>Players in Lobby:</p>
-        {battle.activeUsers.map((userId: any, index: number) => <LobbyPlayerListItem userId={userId} key={index} />)}
+        {battle?.activeUsers.map((userId: any, index: number) => <LobbyPlayerListItem isUserAdmin={battle?.isUserAdmin} userId={userId} key={index} />)}
       </div>
 
-      {battle.isUserAdmin && <Button
+      {battle?.isUserAdmin && <Button
         loading={startBattleButtonLoading}
         onClick={startBattleHandler}
         className='flex py-3 px-4 bg-gray-700 text-lg hover:bg-gray-600 duration-200 rounded-lg mb-6 font-bold justify-center w-full'
       >
         Start Battle
       </Button>}
+      <Button
+        loaderColor='red'
+        loading={leaveBattleButtonLoading}
+        className='flex w-full justify-center text-red-500 font-normal tracking-wide '
+        onClick={handleLeaveBattle}
+      >
+        Leave Battle
+      </Button>
 
     </div>
   )

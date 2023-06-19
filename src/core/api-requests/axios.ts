@@ -64,7 +64,7 @@ const API_CALLS = {
     method: "get"
   },
 
-  get_details_by_id: {
+  get_user_details_by_id: {
     URL: "user/get-details-by-id",
     method: "get"
   },
@@ -76,6 +76,11 @@ const API_CALLS = {
 
   join_battle: {
     URL: "battle/join-battle",
+    method: "post"
+  },
+
+  leave_battle: {
+    URL: "battle/remove-from-battle",
     method: "post"
   },
 

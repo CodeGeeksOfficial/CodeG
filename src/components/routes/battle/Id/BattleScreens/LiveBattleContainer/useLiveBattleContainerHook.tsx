@@ -34,7 +34,7 @@ const useLiveBattleContainerHook = () => {
           if (usersData[userId]) {
             newUsersData[userId] = usersData[userId]
           } else {
-            const userData = (await apiCall({ key: "get_details_by_id", params: { user_id: userId } }) as any).data
+            const userData = (await apiCall({ key: "get_user_details_by_id", params: { user_id: userId } }) as any).data
             newUsersData[userId] = userData;
           }
         }));

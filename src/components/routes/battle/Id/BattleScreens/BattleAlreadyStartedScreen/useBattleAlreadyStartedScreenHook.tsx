@@ -20,7 +20,7 @@ const useBattleAlreadyStartedScreenHook = () => {
 
   const getPlayersData = async () => {
     let usersData: any = leaderboard.map(async (player: any) => {
-      const userData = (await apiCall({ key: "get_details_by_id", params: { user_id: player.id } }) as any).data
+      const userData = (await apiCall({ key: "get_user_details_by_id", params: { user_id: player.id } }) as any).data
 
       return ({ ...player, userData })
     })
