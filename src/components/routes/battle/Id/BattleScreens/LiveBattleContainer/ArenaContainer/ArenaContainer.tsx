@@ -6,6 +6,7 @@ import CodeEditor from 'src/components/common/CodeEditorWrapper/CodeEditor'
 import useArenaContainerHook from './useArenaContainerHook'
 import FullScreenLoader from 'src/components/common/Loaders/PacmanFullScreenLoader'
 import QuestionInfo from 'src/components/routes/practice/QuestionInfo'
+import ArenaCodeEditor from './ArenaCodeEditor/ArenaCodeEditor'
 
 type Props = {}
 
@@ -32,13 +33,7 @@ const ArenaContainer = (props: Props) => {
         <QuestionInfo question={selectedQuestion} />
       </div>
       <div className='w-3/5'>
-        <CodeEditorWrapper>
-          <DropDown />
-          <div className='h-[calc(100%-60px)] relative'>
-            <CodeEditor />
-            <RunCodeButton />
-          </div>
-        </CodeEditorWrapper>
+        <ArenaCodeEditor questionData={selectedQuestion} />
       </div>
     </div>
   )
