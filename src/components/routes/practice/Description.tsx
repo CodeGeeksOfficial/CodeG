@@ -1,37 +1,14 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 type Props = {
   question: any;
 };
 
-// const question = {
-//   title: "Maximum Subarray",
-//   id: 53,
-//   difficulty: "medium",
-//   points: 100,
-//   question:
-//     "Given an integer array nums, find the subarray with the largest sum, and return its sum.",
-//   example: [
-//     {
-//       input: "nums = [-2,1,-3,4,-1,2,1,-5,4]",
-//       output: "6",
-//       explanation: "The subarray [4,-1,2,1] has the largest sum 6.",
-//     },
-//     {
-//       input: "nums = [1]",
-//       output: "1",
-//       explanation: "The subarray [1] has the largest sum 1.",
-//     },
-//     {
-//       input: "nums = [5,4,-1,7,8]",
-//       output: "23",
-//       explanation: "The subarray [5,4,-1,7,8] has the largest sum 23.",
-//     },
-//   ],
-//   constraints: ["1 <= nums.length <= 10^5", "-104 <= nums[i] <= 10^4"],
-// };
-
 const Description = ({ question }: Props) => {
+
+  const battleData = useSelector((state: any) => state.battle);
+
   const getdifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case "easy":
@@ -49,7 +26,19 @@ const Description = ({ question }: Props) => {
   };
   return (
     <div className="w-full h-full overflow-scroll no-scrollbar">
-      <h2 className="text-xl my-4">Q. {question.title}</h2>
+      <div className="flex items-center justify-between">
+        <div className="text-xl my-4">
+          Q. {question?.title}
+        </div>
+        {battleData && battleData?.status === "arena" && 
+          <div>
+            <span>Score: </span>
+            {battleData?.submissonsData[question?.id][0].score}
+            <span> / </span>
+            {question?.points}
+          </div>
+        }
+      </div>
       <div
         className={
           "w-fit rounded-2xl px-4 py-px block " +
