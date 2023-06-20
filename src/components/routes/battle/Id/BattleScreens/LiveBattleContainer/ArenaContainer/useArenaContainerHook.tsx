@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { apiCall } from 'src/core/api-requests/axios';
 import { setCurrentBattleState } from 'src/core/redux/reducers/battleSlice';
+import userBattleSubmissionsMapper from 'src/utils/userBattleSubmissionsMapper';
 
 const useArenaContainerHook = () => {
 
@@ -25,9 +26,13 @@ const useArenaContainerHook = () => {
       return question;
     }));
 
+    const userSumbissons:any = (await apiCall({key: 'get_user_battle_submissions', params:{battle_id: battle?.id}}) as any).data
+    const submissonsData = userBattleSubmissionsMapper(questionsData,userSumbissons)
+
     dispatch(setCurrentBattleState({
       ...battle,
-      questionsData
+      questionsData,
+      submissonsData
     }))
 
     setSelectedQuestionIndex(0);

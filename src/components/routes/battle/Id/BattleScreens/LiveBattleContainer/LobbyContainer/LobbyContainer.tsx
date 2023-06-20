@@ -6,16 +6,15 @@ import Image from 'next/image'
 import Button from 'src/components/common/Button/Button'
 import useLobbyContainerHook from './useLobbyContainerHook'
 import { useClipboard } from '@chakra-ui/react'
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
 
 type Props = {}
 
 const LobbyContainer = (props: Props) => {
-  const {asPath} = useRouter()
-  const copyURL = "https://codeg.netlify.app" + asPath
-  const { onCopy, value, setValue, hasCopied } = useClipboard(copyURL);
-  
+  // const {asPath} = useRouter()
   const { battle, startBattleButtonLoading, startBattleHandler, leaveBattleButtonLoading, handleLeaveBattle } = useLobbyContainerHook();
+  const copyBattleId = battle?.id
+  const { onCopy, value, setValue, hasCopied } = useClipboard(copyBattleId );
 
   return (
     <div className='py-10 px-20 space-y-10'>
@@ -28,14 +27,15 @@ const LobbyContainer = (props: Props) => {
             </p>
             <p className='text-white opacity-60'>Invite Your Friends to Join the Lobby and Amplify the Fun!</p>
             <div 
-              className='text-sm flex border border-gray-100 max-w-[300px] rounded-md p-3 text-white opacity-60'
+              className='text-sm flex gap-3'
             >
-              <div className='truncate'>
-                {copyURL}
+              <div className='border items-center gap-5 border-gray-300 max-w-[300px] rounded-md p-3 text-white truncate'>
+                <span className='text-[#00ffc3] font-semibold'>Battle Id: </span>
+                <span className='text-gray-300'>{copyBattleId}</span>
               </div>
               <button
                 onClick={onCopy}
-                className='flex items-center justify-center w-[110px]'
+                className='flex items-center justify-center text-[#00ffc3]'
               >
                 {hasCopied ? "Copied" : "Copy"}
               </button>

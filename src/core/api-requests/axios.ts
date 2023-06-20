@@ -94,6 +94,11 @@ const API_CALLS = {
     method: "get"
   },
 
+  get_user_battle_submissions: {
+    URL: "/battle/get-user-submissions",
+    method: "get"
+  },
+
   start_battle: {
     URL: "/battle/start-battle",
     method: "post"
