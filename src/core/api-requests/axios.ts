@@ -24,6 +24,11 @@ const API_CALLS = {
     method: "post",
   },
 
+  update_battle_submission: {
+    URL: "/battle/update-submission",
+    method: "post",
+  },
+
   p_id: {
     URL: "results/p_id",
     method: "GET",

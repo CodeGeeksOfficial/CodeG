@@ -7,6 +7,7 @@ import OutputBox from 'src/components/common/CodeEditorWrapper/OutputBox'
 import QuestionRunButton from 'src/components/common/CodeEditorWrapper/QuestionRunButton'
 import QuestionSubmitButton from 'src/components/common/CodeEditorWrapper/QuestionSubmitButton'
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import useArenaCodeEditorHook from './useArenaCodeEditorHook'
 
 type Props = {
   questionData: any
@@ -15,6 +16,8 @@ type Props = {
 const ArenaCodeEditor = ({ questionData }: Props) => {
 
   const [tabOpen, setTabOpen] = useState("");
+  const { updateSubmission } = useArenaCodeEditorHook();
+
 
   return (
     <CodeEditorWrapper>
@@ -47,7 +50,7 @@ const ArenaCodeEditor = ({ questionData }: Props) => {
         </button>
         <div className='flex gap-4'>
           <QuestionRunButton questionId={questionData.id} invokerFunction={() => { setTabOpen('Output') }} />
-          <QuestionSubmitButton />
+          <QuestionSubmitButton questionId={questionData.id} invokerFunction={() => { setTabOpen('Output') }} callbackFunction={updateSubmission}/>
         </div>
       </div>
     </CodeEditorWrapper >

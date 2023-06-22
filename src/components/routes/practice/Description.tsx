@@ -30,14 +30,6 @@ const Description = ({ question }: Props) => {
         <div className="text-xl my-4">
           Q. {question?.title}
         </div>
-        {battleData && battleData?.status === "arena" && 
-          <div>
-            <span>Score: </span>
-            {battleData?.submissonsData[question?.id][0].score}
-            <span> / </span>
-            {question?.points}
-          </div>
-        }
       </div>
       <div
         className={

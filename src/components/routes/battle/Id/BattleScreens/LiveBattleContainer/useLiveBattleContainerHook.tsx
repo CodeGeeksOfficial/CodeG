@@ -45,13 +45,15 @@ const useLiveBattleContainerHook = () => {
         }
 
         dispatch(setCurrentBattleState({
+          questionsData: battle.questionsData,
+          submissonsData: battle.submissonsData,
           ...docData,
           id: doc.id,
           status: (battle && battle.status) ? battle.status : (docData.startedAt ? "arena" : "lobby"),
           usersData: newUsersData,
           createdAt: docData.createdAt.toDate().getTime(),
           startedAt: docData.startedAt ? docData.startedAt.toDate().getTime() : null,
-          isUserAdmin: isUserAdmin
+          isUserAdmin: isUserAdmin,
         }));
       }
     })
