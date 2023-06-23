@@ -2,11 +2,18 @@ import React, { useEffect, useState } from 'react'
 
 type Props = {
   timeInSeconds:number
+  onTimerEnd?:() => void
 }
 
-const CountdownTimer = ({ timeInSeconds }: Props) => {
+const CountdownTimer = ({ timeInSeconds, onTimerEnd }: Props) => {
 
   const [remainingSeconds, setRemainingSeconds] = useState(timeInSeconds)
+
+  useEffect(()=>{
+    if(remainingSeconds === 0 && onTimerEnd){
+      onTimerEnd()
+    }
+  },[remainingSeconds])
 
   useEffect(()=>{
     const timer = setInterval(()=>{

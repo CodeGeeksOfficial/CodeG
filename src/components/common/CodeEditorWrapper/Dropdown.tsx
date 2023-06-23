@@ -1,20 +1,23 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { useCodeEditorContext } from "./CodeEditorWrapper";
 import languagesConfig from "./languagesConfig";
 import CountdownTimer from "../Timers/CountdownTimer";
+import { setCurrentBattleState } from "src/core/redux/reducers/battleSlice";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
 const SelectLang = ({ setValue, getValues, watch }: any) => {
+  const dispatch = useDispatch()
   const currentTimeStamp = new Date().getTime()
-  const battleStartedAt = useSelector((state: any) => state.battle.startedAt);
-  const battleTimeDuration = useSelector((state: any) => state.battle.timeValidity);
+  const battle = useSelector((state:any) => state.battle)
+  const battleStartedAt = battle?.startedAt;
+  const battleTimeDuration = battle?.timeValidity;
   const battleTimeValidityInSeconds = battleTimeDuration*60000
   return (
     <div className="flex w-full items-center justify-between">
@@ -67,7 +70,13 @@ const SelectLang = ({ setValue, getValues, watch }: any) => {
       {battleStartedAt && 
         <div className="flex items-center mr-12 gap-2">
           <span>Battle Ends In:</span>
-          <CountdownTimer timeInSeconds={Math.floor((battleStartedAt + battleTimeValidityInSeconds - currentTimeStamp)/1000)}/>
+          <CountdownTimer 
+            timeInSeconds={Math.floor((battleStartedAt + battleTimeValidityInSeconds - currentTimeStamp)/1000)}
+            onTimerEnd={()=>{
+              console.log("Battle Ended")
+              dispatch(setCurrentBattleState({...battle,status:"completed"}))
+            }}
+          />
         </div>
       }
     </div>
