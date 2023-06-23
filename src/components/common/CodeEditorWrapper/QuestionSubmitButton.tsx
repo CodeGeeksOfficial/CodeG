@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useCodeEditorContext } from './CodeEditorWrapper'
 import { apiCall } from 'src/core/api-requests/axios'
 import Button from '../Button/Button'
@@ -11,11 +11,13 @@ type Props = {
 
 const QuestionSubmitButton = ({ invokerFunction, callbackFunction, questionId }: Props) => {
 
+  const [loading, setloading] = useState(false)
   const { setValue, getValues, watch } = useCodeEditorContext();
 
   const onClick = async () => {
     await invokerFunction();
     setValue('outputLoading', true)
+    setloading(true)
 
     const payload = {
       code: getValues('code'),
@@ -35,19 +37,21 @@ const QuestionSubmitButton = ({ invokerFunction, callbackFunction, questionId }:
           clearInterval(intervalId);
           setValue('codeOutput', res)
           setValue('outputLoading', false)
+          setloading(false)
           await callbackFunction(pId, questionId);
         }
       } catch (error) {
         console.log(error);
         clearInterval(intervalId);
         setValue('outputLoading', false)
+        setloading(false)
       }
     }, 3000)
 
   }
 
   return (
-    <Button loading={watch('outputLoading')} loaderColor='black' onClick={onClick} className="bg-slate-300 text-black px-6 py-1.5 rounded-md">
+    <Button loading={loading} loaderColor='black' onClick={onClick} className="bg-slate-300 text-black px-6 py-1.5 rounded-md">
       Sumbit
     </Button>
   )

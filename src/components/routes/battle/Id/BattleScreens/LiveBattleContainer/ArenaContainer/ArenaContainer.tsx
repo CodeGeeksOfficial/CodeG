@@ -8,11 +8,7 @@ type Props = {}
 
 const ArenaContainer = (props: Props) => {
 
-  const { loading, selectedQuestion, battle, setSelectedQuestionIndex, selectedQuestionIndex } = useArenaContainerHook();
-
-  if (loading) {
-    return <FullScreenLoader loaderText='Loading Questions' />
-  }
+  const { selectedQuestion, battle, setSelectedQuestionIndex, selectedQuestionIndex } = useArenaContainerHook();
 
   return (
     <div className='w-full h-full flex'>

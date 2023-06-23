@@ -7,7 +7,6 @@ type Props = {
 
 const Description = ({ question }: Props) => {
 
-  const battleData = useSelector((state: any) => state.battle);
 
   const getdifficultyColor = (difficulty: string) => {
     switch (difficulty) {
