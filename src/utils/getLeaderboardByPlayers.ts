@@ -1,14 +1,18 @@
 const getLeaderboardByPlayers = (players: any) => {
-  let playersArr: Array<any> = []
+  let rankedPlayersArr: Array<any> = []
+  let unrankedPlayersArr: Array<any> = []
+
   Object.keys(players).forEach((player: any) => {
     if (players[player].rank) {
-      playersArr.push({ ...players[player], id: player })
+      rankedPlayersArr.push({ ...players[player], id: player })
+    } else {
+      unrankedPlayersArr.push({ ...players[player], id: player })
     }
   })
 
-  playersArr.sort((playerA, playerB) => playerA.rank - playerB.rank)
+  rankedPlayersArr.sort((playerA, playerB) => playerA.rank - playerB.rank)
 
-  return playersArr;
+  return [...rankedPlayersArr, ...unrankedPlayersArr];
 }
 
 export default getLeaderboardByPlayers;
