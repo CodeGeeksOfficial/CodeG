@@ -1,6 +1,6 @@
 import { useToast } from '@chakra-ui/react';
-import router from 'next/router';
-import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { apiCall } from 'src/core/api-requests/axios';
 import { setCurrentBattleState } from 'src/core/redux/reducers/battleSlice';
@@ -12,6 +12,7 @@ const useBattleIdContainerHook = () => {
 
   const battleData = useSelector((state: any) => state.battle)
   const dispatch = useDispatch();
+  const router = useRouter()
 
   const toast = useToast();
 

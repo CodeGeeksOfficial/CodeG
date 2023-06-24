@@ -12,7 +12,11 @@ const useBattleRouteContainerHook = () => {
       key: "get_public_battles"
     })
 
-    setPublicBattles(publicBattlesRes.data);
+    const ongoingPublicBattles = publicBattlesRes.data.filter((battle:any) => {
+      return !battle.startedAt
+    })
+    
+    setPublicBattles(ongoingPublicBattles);
     setLoadingPublicBattles(false);
   }
 
