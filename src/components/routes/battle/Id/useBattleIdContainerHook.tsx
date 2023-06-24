@@ -54,7 +54,9 @@ const useBattleIdContainerHook = () => {
   }
 
   useEffect(() => {
-    fetchBattleAndUserDetails();
+    if(battleId){
+      fetchBattleAndUserDetails();
+    }
   }, [battleId])
 
   return { loading, battleData, userCurrentBattleId, battleId, setUserCurrentBattleId }
