@@ -1,6 +1,6 @@
 import React from 'react'
 import PersonCoding from 'src/lib/assets/icons/person-coding.svg'
-import { FaCrown } from 'react-icons/fa'
+// import { FaCrown } from 'react-icons/fa'
 import useBattleEndedScreenHook from './useBattleEndedScreenHook'
 import BattleListingCardSkeletonLoader from '../../../index/BattleListingCard/BattleListingCardSkeletonLoader'
 import Image from 'next/image'
@@ -29,7 +29,8 @@ const BattleEndedScreen = ({ battleData }: Props) => {
             <PacmanLoader color='white' size={16} />
           </div>
           ) : (userDataMappedLeaderboard && userDataMappedLeaderboard.length > 0 && <div className='flex gap-2 justify-end items-center'>
-            <FaCrown color='yellow' size={30} className='mr-2' />
+            {/* <FaCrown color='yellow' size={30} className='mr-2' /> */}
+            <div>{"👑"}</div>
             <Image src={userDataMappedLeaderboard[0].userData.photoUrl} alt='' width={50} height={50} className='w-6 h-6 rounded-full' />
             <p>{userDataMappedLeaderboard[0].userData.name}</p>
           </div>)}

@@ -24,6 +24,11 @@ const API_CALLS = {
     method: "post",
   },
 
+  update_battle_submission: {
+    URL: "/battle/update-submission",
+    method: "post",
+  },
+
   p_id: {
     URL: "results/p_id",
     method: "GET",
@@ -91,6 +96,11 @@ const API_CALLS = {
 
   get_public_battles: {
     URL: "/battle/get-public-battles",
+    method: "get"
+  },
+
+  get_user_battle_submissions: {
+    URL: "/battle/get-user-submissions",
     method: "get"
   },
 

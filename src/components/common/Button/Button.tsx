@@ -11,7 +11,7 @@ type Props = {
 
 const Button = ({ className, children, loading, loaderColor, onClick }: Props) => {
   return (
-    <button className={className} onClick={onClick}>
+    <button disabled={loading} className={className} onClick={onClick}>
       {loading ? <LoaderWithThreeDots color={loaderColor} /> : children}
     </button>
   )

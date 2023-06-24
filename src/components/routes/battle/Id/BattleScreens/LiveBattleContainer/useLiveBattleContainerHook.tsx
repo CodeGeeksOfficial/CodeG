@@ -6,6 +6,7 @@ import { apiCall } from 'src/core/api-requests/axios'
 import { setCurrentBattleState } from 'src/core/redux/reducers/battleSlice'
 import { firebaseApp } from 'src/firebase/firebase.config'
 import { useAuth } from 'src/utils/auth'
+import userBattleSubmissionsMapper from 'src/utils/userBattleSubmissionsMapper'
 
 const useLiveBattleContainerHook = () => {
 
@@ -44,6 +45,23 @@ const useLiveBattleContainerHook = () => {
           isUserAdmin = true;
         }
 
+        let submissonsData = {}
+        let questionsData = []
+        if(battle?.status === "arena"){
+          if(battle?.questionsData){
+            questionsData = battle?.questionsData
+          }else{
+            questionsData = await Promise.all(battle.questions.map(async (qId: string) => {
+              let question = (await apiCall({ key: "fetch_question", params: { question_id: qId } }) as any).data
+              question = { ...question, id: qId };
+              return question;
+            }));
+          }
+          if(questionsData && !battle?.submissonsData){
+            const userSumbissons:any = (await apiCall({key: 'get_user_battle_submissions', params:{battle_id: battle?.id}}) as any).data
+            submissonsData = userBattleSubmissionsMapper(questionsData,userSumbissons)
+          }
+        }
         dispatch(setCurrentBattleState({
           ...docData,
           id: doc.id,
@@ -51,7 +69,9 @@ const useLiveBattleContainerHook = () => {
           usersData: newUsersData,
           createdAt: docData.createdAt.toDate().getTime(),
           startedAt: docData.startedAt ? docData.startedAt.toDate().getTime() : null,
-          isUserAdmin: isUserAdmin
+          isUserAdmin: isUserAdmin,
+          questionsData,
+          submissonsData,
         }));
       }
     })
