@@ -1,6 +1,5 @@
 import React from 'react'
 import Logo from 'src/lib/assets/logo.svg'
-import { BsDiscord, BsTelegram, BsInstagram, BsFacebook, BsYoutube, BsGoogle } from 'react-icons/bs'
 import Link from 'next/link'
 
 type Props = {}
