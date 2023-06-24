@@ -22,7 +22,7 @@ const useArenaCodeEditorHook = () => {
 
     await apiCall({ key: "update_battle_submission", data: payload })
     // const userSumbissons: any = (await apiCall({ key: 'get_user_battle_submissions', params: { battle_id: battleId } }) as any).data
-    // const submissonsData = userBattleSubmissionsMapper(battle.questionsData, userSumbissons)
+    // const submissionsData = userBattleSubmissionsMapper(battle.questionsData, userSumbissons)
   }
 
   return { updateSubmission }
