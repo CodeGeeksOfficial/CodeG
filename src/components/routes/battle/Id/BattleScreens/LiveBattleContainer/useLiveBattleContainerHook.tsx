@@ -47,20 +47,22 @@ const useLiveBattleContainerHook = () => {
 
         let submissonsData = {}
         let questionsData = []
-        if(battle?.status === "arena"){
-          if(battle?.questionsData){
-            questionsData = battle?.questionsData
-          }else{
-            questionsData = await Promise.all(battle.questions.map(async (qId: string) => {
-              let question = (await apiCall({ key: "fetch_question", params: { question_id: qId } }) as any).data
-              question = { ...question, id: qId };
-              return question;
-            }));
-          }
-          if(questionsData && !battle?.submissonsData){
-            const userSumbissons:any = (await apiCall({key: 'get_user_battle_submissions', params:{battle_id: battle?.id}}) as any).data
-            submissonsData = userBattleSubmissionsMapper(questionsData,userSumbissons)
-          }
+
+        if(!battle.questionsData || battle?.questionsData.length === 0){
+          questionsData = await Promise.all(battle.questions.map(async (qId: string) => {
+            let question = (await apiCall({ key: "fetch_question", params: { question_id: qId } }) as any).data
+            question = { ...question, id: qId };
+            return question;
+          }));
+        }else{
+          questionsData = battle?.questionsData
+        }
+
+        if(!battle?.submissonsData && questionsData?.length !== 0){
+          const userSumbissons:any = (await apiCall({key: 'get_user_battle_submissions', params:{battle_id: battle?.id}}) as any).data
+          submissonsData = userBattleSubmissionsMapper(questionsData,userSumbissons)
+        }else{
+          submissonsData = battle?.submissonsData
         }
         dispatch(setCurrentBattleState({
           ...docData,
