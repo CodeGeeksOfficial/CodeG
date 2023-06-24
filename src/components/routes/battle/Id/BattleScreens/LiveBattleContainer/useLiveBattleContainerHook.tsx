@@ -45,7 +45,7 @@ const useLiveBattleContainerHook = () => {
           isUserAdmin = true;
         }
 
-        let submissonsData = {}
+        let submissionsData = {}
         let questionsData = []
 
         if(!battle.questionsData || battle?.questionsData.length === 0){
@@ -58,11 +58,11 @@ const useLiveBattleContainerHook = () => {
           questionsData = battle?.questionsData
         }
 
-        if(!battle?.submissonsData && questionsData?.length !== 0){
+        if(!battle?.submissionsData && questionsData?.length !== 0){
           const userSumbissons:any = (await apiCall({key: 'get_user_battle_submissions', params:{battle_id: battle?.id}}) as any).data
-          submissonsData = userBattleSubmissionsMapper(questionsData,userSumbissons)
+          submissionsData = userBattleSubmissionsMapper(questionsData,userSumbissons)
         }else{
-          submissonsData = battle?.submissonsData
+          submissionsData = battle?.submissionsData
         }
         dispatch(setCurrentBattleState({
           ...docData,
@@ -73,7 +73,7 @@ const useLiveBattleContainerHook = () => {
           startedAt: docData.startedAt ? docData.startedAt.toDate().getTime() : null,
           isUserAdmin: isUserAdmin,
           questionsData,
-          submissonsData,
+          submissionsData,
         }));
       }
     })
