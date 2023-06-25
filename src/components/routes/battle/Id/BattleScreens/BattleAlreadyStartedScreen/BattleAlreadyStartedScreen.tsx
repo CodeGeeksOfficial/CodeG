@@ -60,9 +60,9 @@ const BattleAlreadyStartedScreen = ({ }: Props) => {
         </div>
 
         {loading ? <BattleListingCardSkeletonLoader /> : (
-          userDataMappedLeaderboard.map((player: any, index: number) => <div className='flex py-2 px-4 bg-gray-700 rounded-lg my-2' key={index}>
+          userDataMappedLeaderboard.map((player: any, index: number) => <div className={`flex py-2 px-4 bg-gray-700 rounded-lg my-2`} key={index}>
             <p className='w-[60%]'>{player.userData.name}</p>
-            <p className='w-[20%]'>{player.rank}</p>
+            <p className='w-[20%]'>{player.rank ? player.rank : "-"}</p>
             <p className='w-[20%]'>{player.score}</p>
           </div>))}
 

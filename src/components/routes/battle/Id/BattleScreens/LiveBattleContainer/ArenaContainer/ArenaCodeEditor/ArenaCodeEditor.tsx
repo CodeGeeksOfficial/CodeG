@@ -8,6 +8,10 @@ import QuestionRunButton from 'src/components/common/CodeEditorWrapper/QuestionR
 import QuestionSubmitButton from 'src/components/common/CodeEditorWrapper/QuestionSubmitButton'
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import useArenaCodeEditorHook from './useArenaCodeEditorHook'
+import CountdownTimer from 'src/components/common/Timers/CountdownTimer'
+import { useDispatch, useSelector } from 'react-redux'
+import { setCurrentBattleState } from 'src/core/redux/reducers/battleSlice'
+import EndBattleButton from '../EndBattleButton'
 
 type Props = {
   questionData: any
@@ -17,11 +21,33 @@ const ArenaCodeEditor = ({ questionData }: Props) => {
 
   const [tabOpen, setTabOpen] = useState("");
   const { updateSubmission } = useArenaCodeEditorHook();
+  const dispatch = useDispatch()
+  const currentTimeStamp = new Date().getTime()
+  const battle = useSelector((state: any) => state.battle)
+  const battleStartedAt = battle?.startedAt;
+  const battleTimeDuration = battle?.timeValidity;
+  const battleTimeValidityInSeconds = battleTimeDuration * 60000
 
 
   return (
     <CodeEditorWrapper>
-      <DropDown />
+      <div className='flex w-full py-2.5 px-8 justify-between'>
+        <DropDown />
+        <div className='flex gap-4 items-center'>
+          <div>
+            {battleStartedAt &&
+              <CountdownTimer
+                timeInSeconds={Math.floor((battleStartedAt + battleTimeValidityInSeconds - currentTimeStamp) / 1000)}
+                onTimerEnd={() => {
+                  dispatch(setCurrentBattleState({ ...battle, status: "completed" }))
+                }}
+              />
+            }
+          </div>
+
+          <EndBattleButton />
+        </div>
+      </div>
       <div className={`${tabOpen === "" ? "h-[calc(100%-120px)]" : "h-[calc(100%-440px)]"}`}>
         <CodeEditor />
       </div>
@@ -50,7 +76,7 @@ const ArenaCodeEditor = ({ questionData }: Props) => {
         </button>
         <div className='flex gap-4'>
           <QuestionRunButton questionId={questionData.id} invokerFunction={() => { setTabOpen('Output') }} />
-          <QuestionSubmitButton questionId={questionData.id} invokerFunction={() => { setTabOpen('Output') }} callbackFunction={updateSubmission}/>
+          <QuestionSubmitButton questionId={questionData.id} invokerFunction={() => { setTabOpen('Output') }} callbackFunction={updateSubmission} />
         </div>
       </div>
     </CodeEditorWrapper >

@@ -11,8 +11,8 @@ type NavbarProps = {
   openAuthModal?: () => void
 };
 
-const Navbar = ({openAuthModal}: NavbarProps) => {
-  const { currentUser,logOut } = useAuth()
+const Navbar = ({ openAuthModal }: NavbarProps) => {
+  const { currentUser, logOut } = useAuth()
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
   const handleSignOut = () => {
@@ -33,14 +33,20 @@ const Navbar = ({openAuthModal}: NavbarProps) => {
         <span className="text-white">Code</span>
         <span className="text-[#00ffc2]">G</span>
       </Link>
+
+      <div className="text-white text-lg items-center md:gap-6 gap-4 pl-10 h-full sm:flex hidden">
+        <Link href={'/battle'}>Battle</Link>
+        <Link href={'/practice'}>Practice</Link>
+        <Link href={'/ide'}>IDE</Link>
+      </div>
       <div className="flex-grow mx-5">
-        
+
       </div>
       <div className="">
-        {currentUser ? 
+        {currentUser ?
           <Popover className="relative">
             <Popover.Button className="inline-flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
-              <Image src={currentUser?.photoURL} width={80} height={80} alt="Profile Photo" className="h-10 w-10 rounded-full"/>
+              <Image src={currentUser?.photoURL} width={80} height={80} alt="Profile Photo" className="h-10 w-10 rounded-full" />
             </Popover.Button>
 
             <Transition
@@ -57,11 +63,11 @@ const Navbar = ({openAuthModal}: NavbarProps) => {
                   <div className="p-3">
                     <div className="group relative flex gap-x-6 rounded-md p-4 hover:bg-[#00ffc2] transition-all">
                       <Link
-                          href={'/dashboard'}
-                          className="font-semibold text-gray-900"
-                        >
-                          Dashboard
-                          <span className="absolute inset-0" />
+                        href={'/dashboard'}
+                        className="font-semibold text-gray-900"
+                      >
+                        Dashboard
+                        <span className="absolute inset-0" />
                       </Link>
                     </div>
                     <div className="group relative flex gap-x-6 rounded-md p-4 hover:bg-[#00ffc2] transition-all">
@@ -79,11 +85,11 @@ const Navbar = ({openAuthModal}: NavbarProps) => {
             </Transition>
           </Popover>
           :
-          <button 
+          <button
             className="flex flex-row gap-2 items-center justify-between cursor-pointer px-2 py-2 hover:bg-[#00ffc3] hover:border-[#00ffc3] border rounded-md ease-in duration-100 text-white tracking-wide hover:text-[#303136]"
             onClick={openAuthModal}
           >
-            <GoogleIcon className = 'w-6 h-6'/>
+            <GoogleIcon className='w-6 h-6' />
             <div className="text-sm sm:text-base">Sign In</div>
           </button>
         }

@@ -12,17 +12,12 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
-const SelectLang = ({ setValue, getValues, watch }: any) => {
-  const dispatch = useDispatch()
-  const currentTimeStamp = new Date().getTime()
-  const battle = useSelector((state:any) => state.battle)
-  const battleStartedAt = battle?.startedAt;
-  const battleTimeDuration = battle?.timeValidity;
-  const battleTimeValidityInSeconds = battleTimeDuration*60000
+const SelectLang = ({ setValue, watch }: any) => {
+
   return (
     <div className="flex w-full items-center justify-between">
       <Menu as="div" className="relative inline-block text-left">
-        <div className="flex w-full justify-between ml-16 border-none">
+        <div className="flex w-full justify-between border-none">
           <Menu.Button className="inline-flex justify-center gap-x-1.5 rounded-md bg-[#272727] px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 text-gray-50">
             {watch('language')}
             <ChevronDownIcon
@@ -67,28 +62,17 @@ const SelectLang = ({ setValue, getValues, watch }: any) => {
           </Menu.Items>
         </Transition>
       </Menu>
-      {battleStartedAt && 
-        <div className="flex items-center mr-12 gap-2">
-          <span>Battle Ends In:</span>
-          <CountdownTimer 
-            timeInSeconds={Math.floor((battleStartedAt + battleTimeValidityInSeconds - currentTimeStamp)/1000)}
-            onTimerEnd={()=>{
-              console.log("Battle Ended")
-              dispatch(setCurrentBattleState({...battle,status:"completed"}))
-            }}
-          />
-        </div>
-      }
+
     </div>
   );
 };
 
-const DropDown = (props: any) => {
+const DropDown = () => {
 
   const { setValue, getValues, watch } = useCodeEditorContext();
 
   return (
-    <section className="w-full h-[60px] flex items-center">
+    <section className="">
       <SelectLang setValue={setValue} getValues={getValues} watch={watch} />
     </section>
   );

@@ -8,7 +8,7 @@ type Props = {}
 
 const Index = (props: Props) => {
   return (
-    <div className='w-screen h-screen'>
+    <div className=''>
       <Navbar />
       <MainCard />
       <CreateAContest className='px-2 pb-16 bg-[#f0f0f0]' />

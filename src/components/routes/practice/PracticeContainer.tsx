@@ -17,7 +17,7 @@ const PracticeContainer = ({ question }: Props) => {
         <section className="w-1/2 h-full">
           <QuestionInfo question={question} />
         </section>
-        <section className="w-1/2 h-full">
+        <section className="w-1/2 h-full bg-[#141519] text-white">
           <PracticeEditor questionId={question.id} />
         </section>
       </div>
