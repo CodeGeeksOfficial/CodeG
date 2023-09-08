@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useAuth } from 'src/utils/auth';
 import { useDisclosure } from '@chakra-ui/react';
 import Image from 'next/image';
@@ -10,11 +10,21 @@ import CommonModal from './CommonModal';
 type AuthModalProps = {
   isOpen: boolean
   onClose: () => void
-  onSubmit?: () => void
-  onSignUp: () => void
+  onSubmit: Function
 }
 
-export const AuthModal = ({isOpen, onClose, onSignUp, onSubmit}: AuthModalProps) => {
+export const AuthModal = ({ isOpen, onClose, onSubmit }: AuthModalProps) => {
+
+  const { signInWithGoogle } = useAuth();
+
+  const onSignUp = async (callbackFn: any = () => { }) => {
+    try {
+      // let result = await signInWithGoogle()
+      onSubmit()
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <CommonModal
@@ -34,8 +44,8 @@ export const AuthModal = ({isOpen, onClose, onSignUp, onSubmit}: AuthModalProps)
           <button
             onClick={onSignUp}
             className="flex justify-center items-center bg-black text-white py-3 w-full rounded-lg gap-x-3 sm:font-semibold sm:text-base text-sm"
-            >
-            <GoogleIcon className = 'w-6 h-6'/>
+          >
+            <GoogleIcon className='w-6 h-6' />
             Continue with Google
           </button>
         </div>
@@ -44,53 +54,47 @@ export const AuthModal = ({isOpen, onClose, onSignUp, onSubmit}: AuthModalProps)
   );
 };
 
-export const withAuthModal = (Component:React.ComponentType<any>) => {const ComponentToReturn = (props:any) => {
-  const {isOpen, onOpen, onClose} = useDisclosure();
-  const { signInWithGoogle } = useAuth();
+export const withAuthModal = (Component: React.ComponentType<any>) => {
+  const ComponentToReturn = (props: any) => {
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const callbackFnRef = useRef(() => { });
 
-  const logInWithGoogle = async () => {
-    try {
-      let result = await signInWithGoogle()
-      onClose()
-    } catch (error) {
-      console.log(error)
+    const onOpenWithCallback = (callbackFn: any = () => { }) => {
+      callbackFnRef.current = callbackFn;
+      onOpen();
     }
-  }
 
-  return (
+    const customOnClose = () => {
+      onClose();
+      callbackFnRef.current();
+    }
+
+    return (
       <>
-          <AuthModal isOpen={isOpen} onClose={onClose} onSignUp = {logInWithGoogle}/>
-          <Component openAuthModal={onOpen} {...props} />
+        <AuthModal isOpen={isOpen} onClose={onClose} onSubmit={customOnClose} />
+        <Component openAuthModal={onOpenWithCallback} {...props} />
       </>
-  );
-};
-return ComponentToReturn;
+    );
+  };
+  return ComponentToReturn;
 }
 
-export const withFullScreenAuth = (Component:React.ComponentType<any>) => {const ComponentToReturn2 = (props:any) => {
-  const { onClose} = useDisclosure();
-  const { signInWithGoogle, currentUser } = useAuth();
+export const withFullScreenAuth = (Component: React.ComponentType<any>) => {
+  const ComponentToReturn2 = (props: any) => {
+    const { onClose } = useDisclosure();
+    const { signInWithGoogle, currentUser } = useAuth();
 
-  const logInWithGoogle = async () => {
-    try {
-      let result = await signInWithGoogle()
-      onClose()
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  return (
+    return (
       <>
-      {currentUser ? 
-        <Component {...props} />
-        :
-        <div className='w-screen h-screen bg-[#141519f1]'>
-          <AuthModal isOpen={true} onClose={()=>{}} onSignUp = {logInWithGoogle}/>
-        </div>
-      }
+        {currentUser ?
+          <Component {...props} />
+          :
+          <div className='w-screen h-screen bg-[#141519f1]'>
+            <AuthModal isOpen={true} onClose={() => { }} onSubmit={() => { }} />
+          </div>
+        }
       </>
-  );
-};
-return ComponentToReturn2;
+    );
+  };
+  return ComponentToReturn2;
 }

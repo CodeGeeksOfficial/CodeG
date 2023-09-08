@@ -4,14 +4,12 @@ import Logo from "src/lib/assets/logo.svg";
 import { useAuth } from "src/utils/auth";
 import GoogleIcon from 'src/lib/assets/icons/GoogleIcon.svg'
 import Image from "next/image";
-import { withAuthModal } from "src/components/common/Modals/Auth";
 import { Popover, Transition } from "@headlessui/react";
+import PrivateButton from "../Button/PrivateButton";
 
-type NavbarProps = {
-  openAuthModal?: () => void
-};
+type NavbarProps = {};
 
-const Navbar = ({ openAuthModal }: NavbarProps) => {
+const Navbar = ({ }: NavbarProps) => {
   const { currentUser, logOut } = useAuth()
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -24,7 +22,7 @@ const Navbar = ({ openAuthModal }: NavbarProps) => {
   };
 
   return (
-    <div className="sticky top-0 z-40 h-[8vh] bg-[#1E1F25] flex items-center px-4 shadow-zinc-900 shadow-md">
+    <div className=" z-40 h-[8vh] bg-[#1E1F25] flex items-center px-4 shadow-zinc-900 shadow-md">
       <Link
         href="/"
         className="text-2xl sm:text-3xl flex font-semibold justify-center items-center lg:justify-start"
@@ -85,18 +83,19 @@ const Navbar = ({ openAuthModal }: NavbarProps) => {
             </Transition>
           </Popover>
           :
-          <button
+          <PrivateButton
             className="flex flex-row gap-2 items-center justify-between cursor-pointer px-2 py-2 hover:bg-[#00ffc3] hover:border-[#00ffc3] border rounded-md ease-in duration-100 text-white tracking-wide hover:text-[#303136]"
-            onClick={openAuthModal}
+            onClick={() => {
+              console.log("I am a callback");
+            }}
           >
             <GoogleIcon className='w-6 h-6' />
             <div className="text-sm sm:text-base">Sign In</div>
-          </button>
+          </PrivateButton>
         }
       </div>
     </div>
   );
 };
 
-// export default Navbar
-export default withAuthModal(Navbar)
+export default Navbar
